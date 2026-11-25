@@ -1,0 +1,613 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Калькулятор рассрочки — ЖК «Бестселлер»</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<meta name="theme-color" content="#002346">
+<style>
+  html, body { margin: 0; padding: 0; background: #F5F8FB; }
+  @media print { html, body { background: #FFFFFF; } }
+</style>
+</head>
+<body>
+
+<!-- ===== ВСТАВКА НА САЙТ: НАЧАЛО (скопируйте всё до метки «КОНЕЦ» в HTML-блок сайта) ===== -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;700&display=swap">
+<style>
+/* Стиль BAZA Development: светлый фон, белые карточки 20px, тёмно-синий текст, красные акценты, «таблетки» */
+#rassrochka-calc {
+  --rc-page: #F5F8FB;
+  --rc-text: #002346;
+  --rc-muted: #5f7690;
+  --rc-faint: #6C8DAF;
+  --rc-line: #D8E6F4;
+  --rc-bg: #FFFFFF;
+  --rc-soft: #EDF6FF;
+  --rc-red: #E20617;
+  --rc-red-hover: #b50c20;
+  --rc-red-soft: #fef3f3;
+  --rc-radius: 20px;
+  font-family: "Inter Tight", "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  color: var(--rc-text);
+  background: var(--rc-page);
+  font-size: 15px;
+  line-height: 1.45;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 16px;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+}
+#rassrochka-calc *, #rassrochka-calc *::before, #rassrochka-calc *::after { box-sizing: border-box; }
+#rassrochka-calc [hidden] { display: none !important; }
+#rassrochka-calc h2 { font-size: 40px; line-height: 1.1; margin: 0; font-weight: 700; letter-spacing: -0.02em; text-wrap: balance; }
+#rassrochka-calc h3 { font-size: 20px; line-height: 1.25; margin: 0; font-weight: 700; letter-spacing: -0.01em; }
+#rassrochka-calc .rc-brand { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 10px; }
+#rassrochka-calc .rc-brand-r { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+#rassrochka-calc .rc-nav { display: inline-flex; align-items: center; height: 44px; padding: 0 22px; border-radius: 100px; background: var(--rc-bg); color: var(--rc-text); box-shadow: inset 0 0 0 1px var(--rc-line); font-size: 15px; font-weight: 400; text-decoration: none; white-space: nowrap; transition: box-shadow .15s, color .15s; }
+#rassrochka-calc .rc-nav:hover { box-shadow: inset 0 0 0 1px var(--rc-red); color: var(--rc-red); }
+#rassrochka-calc .rc-logo { display: block; line-height: 0; margin-left: 10px; }
+#rassrochka-calc .ipc-logo-svg { display: block; height: 52px; width: auto; }
+#rassrochka-calc .rc-sub { color: var(--rc-muted); margin: 0 0 24px; max-width: 640px; font-size: 14px; }
+#rassrochka-calc .rc-card { background: var(--rc-bg); border-radius: var(--rc-radius); padding: 24px; }
+
+/* Исходные данные */
+#rassrochka-calc .rc-inputs { display: grid; grid-template-columns: auto repeat(4, minmax(0, 1fr)); gap: 16px; align-items: end; }
+#rassrochka-calc .rc-suffix { position: relative; }
+#rassrochka-calc .rc-suffix input { padding-right: 40px; }
+#rassrochka-calc .rc-suffix span { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); color: var(--rc-muted); pointer-events: none; font-size: 15px; }
+#rassrochka-calc label, #rassrochka-calc .rc-label { display: block; font-weight: 400; font-size: 13px; margin-bottom: 6px; color: var(--rc-muted); }
+#rassrochka-calc input {
+  width: 100%; height: 48px; padding: 0 16px; font: inherit; font-size: 15px; color: var(--rc-text);
+  border: 1px solid var(--rc-line); border-radius: 12px; background: var(--rc-bg); margin: 0; transition: border-color .15s;
+}
+#rassrochka-calc input::placeholder { color: var(--rc-faint); }
+#rassrochka-calc input:hover { border-color: var(--rc-faint); }
+#rassrochka-calc input:focus { outline: none; border-color: var(--rc-text); box-shadow: 0 0 0 3px var(--rc-soft); }
+#rassrochka-calc .rc-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+#rassrochka-calc .rc-pills button {
+  font: inherit; font-size: 14px; border: 1px solid var(--rc-line); background: var(--rc-bg); color: var(--rc-text);
+  padding: 0 18px; height: 48px; border-radius: 100px; cursor: pointer; white-space: nowrap; transition: border-color .15s, background .15s;
+}
+#rassrochka-calc .rc-pills button:hover { border-color: var(--rc-faint); }
+#rassrochka-calc .rc-pills button[aria-pressed="true"] { background: var(--rc-text); border-color: var(--rc-text); color: #FFFFFF; font-weight: 400; }
+#rassrochka-calc button:focus-visible, #rassrochka-calc a:focus-visible { outline: 2px solid var(--rc-red); outline-offset: 2px; }
+
+/* Карточки рассрочек */
+#rassrochka-calc .rc-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 16px; align-items: start; }
+#rassrochka-calc .rc-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 6px; }
+#rassrochka-calc .rc-badge { display: inline-block; font-size: 12px; font-weight: 400; padding: 4px 10px; border-radius: 100px; white-space: nowrap; color: var(--rc-red); background: var(--rc-red-soft); }
+#rassrochka-calc .rc-badge.rc-zero { color: var(--rc-muted); background: var(--rc-page); }
+#rassrochka-calc .rc-desc { color: var(--rc-muted); font-size: 13px; margin: 0 0 14px; }
+#rassrochka-calc .rc-total { background: var(--rc-text); color: #FFFFFF; border-radius: 16px; padding: 16px 18px; margin-bottom: 14px; display: flex; flex-wrap: wrap; gap: 8px 28px; }
+#rassrochka-calc .rc-total .rc-k { color: rgba(255, 255, 255, 0.7); font-size: 13px; }
+#rassrochka-calc .rc-total .rc-v { font-size: 28px; line-height: 1.15; font-weight: 700; letter-spacing: -0.02em; white-space: nowrap; }
+#rassrochka-calc .rc-total .rc-v.rc-sm { font-size: 20px; font-weight: 400; }
+#rassrochka-calc table { width: 100%; border-collapse: collapse; font-size: 14px; }
+#rassrochka-calc th { color: var(--rc-faint); font-weight: 400; font-size: 12px; text-align: left; padding: 0 0 6px; border-bottom: 1px solid var(--rc-line); }
+#rassrochka-calc th:last-child, #rassrochka-calc td:last-child { text-align: right; }
+#rassrochka-calc td { padding: 7px 8px 7px 0; border-bottom: 1px solid var(--rc-line); vertical-align: top; font-variant-numeric: tabular-nums; }
+#rassrochka-calc td:first-child { white-space: nowrap; color: var(--rc-muted); width: 1%; padding-right: 16px; }
+#rassrochka-calc td:last-child { white-space: nowrap; font-weight: 400; padding-right: 0; }
+#rassrochka-calc tr.rc-final td { font-weight: 700; color: var(--rc-text); }
+#rassrochka-calc .rc-s2 { display: block; color: var(--rc-faint); font-size: 12px; font-weight: 400; }
+#rassrochka-calc .rc-meta { display: flex; justify-content: space-between; gap: 12px; margin-top: 10px; font-size: 13px; color: var(--rc-muted); }
+#rassrochka-calc .rc-meta b { color: var(--rc-text); font-weight: 400; }
+#rassrochka-calc .rc-warn { margin-top: 10px; background: var(--rc-red-soft); color: var(--rc-red); border-radius: 12px; padding: 10px 12px; font-size: 13px; font-weight: 400; }
+#rassrochka-calc .rc-empty { color: var(--rc-muted); font-size: 14px; }
+#rassrochka-calc .rc-foot { margin-top: 16px; display: flex; justify-content: flex-end; align-items: center; flex-wrap: wrap; gap: 10px; }
+#rassrochka-calc .rc-btn { font: inherit; font-size: 14px; font-weight: 400; border: 0; background: var(--rc-bg); color: var(--rc-text); box-shadow: inset 0 0 0 1px var(--rc-line); border-radius: 100px; padding: 0 24px; height: 44px; cursor: pointer; }
+#rassrochka-calc .rc-btn:hover { box-shadow: inset 0 0 0 1px var(--rc-faint); }
+#rassrochka-calc .rc-btn-main { background: var(--rc-red); color: #FFFFFF; box-shadow: none; font-weight: 400; transition: background .15s; }
+#rassrochka-calc .rc-btn-main:hover { background: var(--rc-red-hover); box-shadow: none; }
+#rassrochka-calc .rc-btn:disabled { opacity: .6; cursor: progress; }
+#rassrochka-calc .rc-savemsg { font-size: 13px; color: var(--rc-red); max-width: 420px; }
+#rassrochka-calc .rc-savemsg:empty { display: none; }
+
+/* Отчёт для PDF (A4 книжный). Собирается отдельно от экрана; без tabular-nums — html2canvas их не поддерживает */
+.rc-report { box-sizing: border-box; width: 794px; min-height: 1123px; padding: 28px 30px; background: #F5F8FB; color: #002346;
+  font-family: "Inter Tight", "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; font-size: 12px; line-height: 1.4; -webkit-font-smoothing: antialiased; }
+.rc-report * { box-sizing: border-box; }
+.rc-report .rr-head { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 12px; }
+.rc-report .rr-title { font-size: 26px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; }
+.rc-report .rr-meta { font-size: 12px; color: #5f7690; margin-top: 4px; }
+.rc-report .rr-logo { display: block; height: 40px; width: auto; }
+.rc-report .rr-inputs { display: flex; gap: 24px; background: #FFFFFF; border-radius: 14px; padding: 12px 16px; margin-bottom: 10px; }
+.rc-report .rr-inputs div { font-size: 11px; color: #5f7690; }
+.rc-report .rr-inputs b { display: block; font-size: 14px; color: #002346; font-weight: 400; margin-top: 2px; }
+.rc-report .rr-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-items: start; }
+.rc-report .rc-card { background: #FFFFFF; border-radius: 14px; padding: 14px 16px; }
+.rc-report .rc-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; margin-bottom: 4px; }
+.rc-report h3 { font-size: 15px; font-weight: 700; margin: 0; }
+.rc-report .rc-badge { display: inline-block; font-size: 10.5px; font-weight: 400; padding: 3px 8px; border-radius: 100px; white-space: nowrap; color: #E20617; background: #fef3f3; }
+.rc-report .rc-badge.rc-zero { color: #5f7690; background: #F5F8FB; }
+.rc-report .rc-desc { color: #5f7690; font-size: 11px; margin: 0 0 8px; }
+.rc-report .rc-total { background: #002346; color: #FFFFFF; border-radius: 10px; padding: 10px 12px; margin-bottom: 8px; display: flex; flex-wrap: wrap; gap: 4px 20px; }
+.rc-report .rc-k { color: rgba(255, 255, 255, 0.7); font-size: 10.5px; }
+.rc-report .rc-v { font-size: 20px; font-weight: 700; letter-spacing: -0.02em; white-space: nowrap; line-height: 1.2; }
+.rc-report .rc-v.rc-sm { font-size: 15px; font-weight: 400; }
+.rc-report table { width: 100%; border-collapse: collapse; font-size: 11px; }
+.rc-report th { color: #6C8DAF; font-weight: 400; font-size: 10px; text-align: left; padding: 0 0 4px; border-bottom: 1px solid #D8E6F4; }
+.rc-report th:last-child, .rc-report td:last-child { text-align: right; }
+.rc-report td { padding: 5px 6px 5px 0; border-bottom: 1px solid #D8E6F4; vertical-align: top; }
+.rc-report td:first-child { white-space: nowrap; color: #5f7690; width: 1%; padding-right: 10px; }
+.rc-report td:last-child { white-space: nowrap; font-weight: 400; padding-right: 0; }
+.rc-report tr.rc-final td { font-weight: 700; color: #002346; }
+.rc-report .rc-s2 { display: block; color: #6C8DAF; font-size: 10px; font-weight: 400; }
+.rc-report .rc-meta { display: flex; justify-content: space-between; gap: 8px; margin-top: 6px; font-size: 11px; color: #5f7690; }
+.rc-report .rc-meta b { color: #002346; }
+.rc-report .rc-warn { margin-top: 6px; color: #E20617; font-size: 11px; }
+
+@media (prefers-reduced-motion: reduce) { #rassrochka-calc * { transition: none !important; } }
+@media (max-width: 960px) {
+  #rassrochka-calc .rc-inputs { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  #rassrochka-calc .rc-inputs .rc-f-project { grid-column: 1 / -1; }
+  #rassrochka-calc .rc-grid { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 640px) {
+  #rassrochka-calc { padding: 16px; }
+  #rassrochka-calc h2 { font-size: 28px; }
+  #rassrochka-calc .ipc-logo-svg { height: 38px; }
+  #rassrochka-calc .rc-brand-r { gap: 10px; }
+  #rassrochka-calc .rc-nav { height: 36px; padding: 0 14px; font-size: 13px; }
+  #rassrochka-calc .rc-card { padding: 18px; }
+  #rassrochka-calc .rc-inputs { grid-template-columns: minmax(0, 1fr); }
+  #rassrochka-calc .rc-total .rc-v { font-size: 24px; }
+  #rassrochka-calc table { font-size: 13px; }
+  #rassrochka-calc td { padding-right: 6px; }
+  #rassrochka-calc td:first-child { padding-right: 8px; }
+}
+/* узкий телефон: заголовок и логотип в первой строке, кнопка «Ипотечный калькулятор» — под ними */
+@media (max-width: 960px) {
+  #rassrochka-calc .rc-brand { flex-wrap: wrap; gap: 6px 12px; justify-content: flex-start; }
+  #rassrochka-calc .rc-brand::after { content: ''; order: 2; flex-basis: 100%; }
+  #rassrochka-calc .rc-brand h2 { flex: 1 1 0; min-width: 0; }
+  #rassrochka-calc .rc-brand-r { display: contents; }
+  #rassrochka-calc .rc-nav { order: 3; }
+}
+@page { size: A4 portrait; margin: 10mm; }
+@media print {
+  #rassrochka-calc { background: #FFFFFF; padding: 0; max-width: none; font-size: 12px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  #rassrochka-calc .rc-nav, #rassrochka-calc .rc-sub, #rassrochka-calc .rc-foot { display: none !important; }
+  #rassrochka-calc h2 { font-size: 26px; }
+  #rassrochka-calc .ipc-logo-svg { height: 38px; }
+  #rassrochka-calc .rc-card { border: 1px solid var(--rc-line); padding: 12px 14px; break-inside: avoid; page-break-inside: avoid; }
+  #rassrochka-calc .rc-inputs { grid-template-columns: auto 1fr 1fr 1fr 1fr; gap: 10px; }
+  #rassrochka-calc input, #rassrochka-calc .rc-pills button { height: 30px; font-size: 12px; }
+  #rassrochka-calc .rc-grid { grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+  #rassrochka-calc .rc-total { padding: 10px 12px; margin-bottom: 8px; }
+  #rassrochka-calc .rc-total .rc-v { font-size: 20px; }
+  #rassrochka-calc .rc-total .rc-v.rc-sm { font-size: 15px; }
+  #rassrochka-calc table { font-size: 11px; }
+  #rassrochka-calc td { padding: 4px 6px 4px 0; }
+}
+</style>
+
+<div id="rassrochka-calc">
+  <div class="rc-brand">
+    <h2>Калькулятор рассрочки</h2>
+    <div class="rc-brand-r">
+      <a class="rc-nav" id="rc-all" href="programmy.html">Все программы</a>
+      <a class="rc-nav" id="rc-nav" href="./">Ипотечный калькулятор</a>
+      <a class="rc-logo" id="rc-logo" href="https://baza.bz/" target="_blank" rel="noopener"><svg class="ipc-logo-svg" viewBox="0 0 1920 1410" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="BAZA Development"> <path fill="#E20617" d="M321.26 434.2c60.79-30.35 88.08-91.05 88.08-186.06v-32.99C409.33 72.63 348.55 2.69 207.13 2.69H1.19v923.72h214.62c136.46 0 207.17-76.54 207.17-219.05v-75.22c0-97.65-28.53-167.59-101.72-197.94zM137.66 134.65h65.75c48.38 0 69.47 29.04 69.47 95.01v51.46c0 73.89-31.02 97.65-81.88 97.65h-53.34v-244.13zm148.87 568.75c0 68.62-24.81 91.05-70.71 91.05h-78.16v-283.71h60.79c62.03 0 88.08 26.39 88.08 112.17v80.49zM607.94 2.69l-139.08 923.72h125.42l23.59-167.59h167.64l23.59 167.59h137.84L807.87 2.69h-199.92zm27.32 630.77l65.81-467.14 65.81 467.14h-131.63z"></path> <polygon fill="#E20617" points="993.59 134.65 1252.87 134.65 993.59 797.09 993.59 926.41 1393.05 926.41 1393.05 794.46 1133.78 794.46 1393.05 132.01 1393.05 2.69 993.59 2.69 993.59 134.65"></polygon> <path fill="#E20617" d="M1779.58 2.69h-200.15l-139.23 923.72h125.56l23.62-167.59h167.82l23.62 167.59h137.99L1779.58 2.69zm-172.8 630.77l65.89-467.14 65.88 467.14h-131.77zM2.11 1094.71h77.49c48.99 0 73.03 27.17 73.03 77.04v157.65c0 49.88-24.05 77.04-73.03 77.04H2.11v-311.73zm48.99 44.53v222.66h27.61c15.59 0 24.94-8.02 24.94-30.28v-162.1c0-22.27-9.35-30.28-24.94-30.28h-27.61zM232.79 1226.08h67.24v44.53h-67.24v91.29h84.61v44.53h-133.6v-311.73h133.6v44.53h-84.61v86.84zM421.6 1348.99l37.41-254.28h44.98l-48.1 311.73h-73.03l-48.1-311.73h49.43l37.41 254.28zM575.69 1226.08h67.24v44.53h-67.24v91.29h84.61v44.53h-133.6v-311.73h133.6v44.53h-84.61v86.84zM690.58 1094.71h48.99v267.2h80.6v44.53h-129.59v-311.73zM837.53 1169.52c0-49.88 26.27-78.38 74.37-78.38s74.37 28.5 74.37 78.38v162.1c0 49.88-26.27 78.38-74.37 78.38s-74.37-28.5-74.37-78.38v-162.1zm48.99 165.22c0 22.27 9.8 30.73 25.38 30.73s25.38-8.46 25.38-30.73v-168.33c0-22.27-9.8-30.73-25.38-30.73s-25.38 8.46-25.38 30.73v168.33zM1163.07 1171.75v40.52c0 49.88-24.05 77.04-73.03 77.04h-23.16v117.12h-48.99v-311.73h72.14c48.99 0 73.03 27.17 73.03 77.04zm-96.19-32.51v105.54h23.16c15.59 0 24.05-7.13 24.05-29.39v-46.76c0-22.27-8.46-29.39-24.05-29.39h-23.16zM1289.54 1316.04l33.4-221.33h68.14v311.73h-46.31v-223.55l-33.84 223.55h-46.31l-36.52-220.44v220.44h-42.75v-311.73h68.14l36.07 221.33zM1475.68 1226.08h67.24v44.53h-67.24v91.29h84.61v44.53h-133.6v-311.73h133.6v44.53h-84.61v86.84zM1634.22 1180.66v225.78h-44.09v-311.73h61.46l50.32 186.59v-186.59h43.64v311.73h-50.32l-61.01-225.78zM1766.48 1094.71h151.41v44.53h-51.21v267.2h-48.99v-267.2h-51.21v-44.53z"></path> </svg></a>
+    </div>
+  </div>
+  <p class="rc-sub">ЖК «Бестселлер», Москва. Укажите стоимость квартиры — калькулятор покажет график платежей по всем вариантам рассрочки.</p>
+
+  <div class="rc-card">
+    <div class="rc-inputs">
+      <div class="rc-f-project">
+        <span class="rc-label" id="rc-project-l">Проект</span>
+        <div class="rc-pills" id="rc-project" role="group" aria-labelledby="rc-project-l"></div>
+      </div>
+      <div>
+        <label for="rc-flat">Номер квартиры</label>
+        <input id="rc-flat" type="text" autocomplete="off" placeholder="указать">
+      </div>
+      <div>
+        <label for="rc-price">Стоимость квартиры, ₽</label>
+        <input id="rc-price" type="text" inputmode="numeric" autocomplete="off">
+      </div>
+      <div>
+        <label for="rc-finish">Отделка, ₽</label>
+        <input id="rc-finish" type="text" inputmode="numeric" autocomplete="off" placeholder="0">
+      </div>
+      <div>
+        <label for="rc-extra">Доп. скидка, %</label>
+        <div class="rc-suffix"><input id="rc-extra" type="text" inputmode="decimal" autocomplete="off" value="0"><span aria-hidden="true">%</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="rc-grid" id="rc-grid"></div>
+
+  <div class="rc-foot">
+    <span class="rc-savemsg" id="rc-savemsg" role="status"></span>
+    <button type="button" class="rc-btn" id="rc-print">Распечатать расчёт</button>
+    <button type="button" class="rc-btn rc-btn-main" id="rc-save">Сохранить PDF</button>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ================== НАСТРОЙКИ ================== */
+  var CONFIG = Object.assign({
+    // ID Google Таблицы. Таблица должна быть доступна «всем, у кого есть ссылка» (просмотр).
+    sheetId: '13obtdqMiDQv0a_7CC7b0LsY2UZJA_xFZd6JtBN3uDRk',
+    // true — при открытии страницы подтягивать условия рассрочек из таблицы (если не удалось — встроенная копия)
+    liveData: true,
+    // Проекты и листы таблицы с их условиями (блоки рассрочек — в колонках O–Q)
+    projects: [
+      { name: 'Бестселлер', sheet: 'Рассрочки_Мск' }
+    ],
+    // Адрес ипотечного калькулятора (кнопка «Ипотека» в шапке). Пусто — кнопка скрыта
+    mortgageUrl: './',
+    showLogo: true,
+    defaults: { project: 'Бестселлер', price: 20000000 }
+  }, window.RASSROCHKA_CALC_CONFIG || {});
+
+  /* Встроенная копия листов (на случай, если таблица недоступна). Снята: 19.11.2026
+     Формат строки: [O, P, Q] — подпись, значение, дата */
+  var SNAPSHOT = {"Бестселлер":[["Рассрочка 50/50",null,null],["Стоимость квартиры базовая, руб.",20492981,null],["Скидка, %",0.04,null],["Стоимость квартиры со скидкой, руб.",19673261.759999998,null],["ПВ, %",0.5,null],["2 платеж, %",0.05,"Date(2027,2,1)"],["3 платеж, %",0.45,"Date(2027,8,30)"],["ПВ, руб.",9836631.0,null],["2 платеж, руб.",983663.0,null],["Последний платеж, руб.",8852967.759999998,null],["Рассрочка 30/30/40",null,null],["Стоимость квартиры базовая, руб.",20492981,null],["Скидка, %",0.04,null],["Стоимость квартиры со скидкой, руб.",19673261.759999998,null],["ПВ, %",0.3,null],["2 платеж, %",0.3,"Date(2026,11,31)"],["Последний 3 платеж, %",0.4,"Date(2027,8,30)"],["Срок рассрочки, мес",10.0,null],["ПВ, руб.",5901979.0,null],["2 платеж, руб.",5901979.0,null],["Последний 4 платеж, руб",7869303.759999998,null],["Рассрочка с ПВ 20% и ежемес. платежами 0,5%",null,null],["Стоимость квартиры, руб.",20492981,null],["Скидка, %",0.02,null],["Итоговая стоимость квартиры, руб.",20083121.38,null],["ПВ, %",0.2,null],["Ежемесячные платежи, %",0.005,null],["Ежемесячный платеж, руб.",75311.70689999999,null],["Промежуточный платеж, %",0.05,"Date(2027,2,1)"],["Кол-во промеж. ежемес. платежей, шт.",9.0,null],["Последний платеж (остаток), %",0.7162500344356331,"Date(2027,8,30)"],["Срок рассрочки, мес",10.0,null],["ПВ, руб.",4016624.0,null],["Сумма промеж ежемес. платежей, руб",677805.0,null],["Промежуточный платеж, руб.",1004156.0,null],["Последний платеж (остаток), руб.",14384536.379999999,null],["Рассрочка для будущих родителей",null,null],["Стоимость квартиры, руб.",24000000,null],["Срок рассрочки, мес",null,null],["Первый платеж, %",0.2,null],["Первый платеж, руб.",4800000.0,null],["Последний платеж (остаток), руб.",19200000,null]]};
+
+  /* ================== РАЗБОР ЛИСТА ==================
+     Блок начинается со строки «Рассрочка …» без значения. Внутри блока по подписям строк:
+     «Скидка, %» — скидка; «ПВ, %» / «Первый платеж, %» — первый платёж сегодня;
+     «N платеж, %», «Промежуточный платеж, %», «Последний … %» — платежи с датой из колонки Q;
+     «Ежемесячные платежи, %» — ежемесячный платёж в % от стоимости.
+     Последний датированный платёж — остаток (стоимость минус остальные платежи).
+     Строки «…, руб.» на листе — расчётные, сайт считает их сам. */
+  function gdate(v) {
+    var m = /Date\((\d+),(\d+),(\d+)/.exec(String(v == null ? '' : v));
+    return m ? new Date(+m[1], +m[2], +m[3]) : null;
+  }
+  function parseSheet(rows) {
+    var blocks = [], cur = null;
+    rows.forEach(function (r) {
+      var L = r[0] == null ? '' : String(r[0]).trim().replace(/\s{2,}/g, ' '), V = r[1], d = gdate(r[2]);
+      if (!L) return;
+      var t = L.toLowerCase().replace(/ё/g, 'е');
+      if (/^рассрочка/.test(t) && typeof V !== 'number') {
+        cur = { title: L, disc: 0, pays: [], monthly: null, parents: /родител/.test(t) };
+        blocks.push(cur);
+        return;
+      }
+      if (!cur) return;
+      var n = typeof V === 'number' ? V : null;
+      if (!/%/.test(t)) return;                       // «…, руб.», «Срок рассрочки, мес» — расчётные
+      if (/^скидка/.test(t)) { if (n != null) cur.disc = n; return; }
+      if (/ежемес/.test(t)) { cur.monthly = n; return; }
+      if (/(пв|платеж)/.test(t) && n != null) {
+        cur.pays.push({ label: L, share: n, date: d, first: /^(пв|первый)/.test(t), mid: /^промежуточн/.test(t) });
+      }
+    });
+    blocks.forEach(function (b) {
+      var later = b.pays.filter(function (p) { return !p.first; });
+      b.last = later.length ? later[later.length - 1] : null; // остаток; нет — остаток без доли (как «для будущих родителей»)
+      b.final = b.last ? b.last.date : null;
+    });
+    return blocks.filter(function (b) { return b.pays.length > 0; });
+  }
+
+  function gvizRows(sheet, signal) {
+    var url = 'https://docs.google.com/spreadsheets/d/' + CONFIG.sheetId + '/gviz/tq?tqx=out:json&headers=0&sheet=' +
+      encodeURIComponent(sheet) + '&range=A1:Q200';
+    return fetch(url, { cache: 'no-store', signal: signal }).then(function (r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.text();
+    }).then(function (t) {
+      var j = JSON.parse(t.slice(t.indexOf('{'), t.lastIndexOf('}') + 1));
+      if (j.status !== 'ok') throw new Error('gviz ' + j.status);
+      return j.table.rows.map(function (row) {
+        var c = row.c || [];
+        var v = function (i) { return c[i] ? c[i].v : null; };
+        return [v(14), v(15), v(16)];
+      }).filter(function (r) { return r[0] != null && r[0] !== ''; });
+    });
+  }
+
+  /* ================== РАСЧЁТ (повторяет формулы листа) ================== */
+  function p15(x) { return +x.toPrecision(15); }
+  function round0(x) { return x < 0 ? -Math.round(p15(-x)) : Math.round(p15(x)); }
+  function today() { var n = new Date(); return new Date(n.getFullYear(), n.getMonth(), n.getDate()); }
+  function days(a, b) { return Math.round((b - a) / 864e5); }
+  var ORD = ['Первый', 'Второй', 'Третий', 'Четвёртый', 'Пятый', 'Шестой'];
+
+  function calcBlock(B, inp) {
+    var T = today(), extra = inp.extra || 0;
+    // Итоговая стоимость = цена × (1 − (скидка рассрочки + доп. скидка)) + отделка. Отделка в скидку не входит
+    var total = inp.base * (1 - Math.min((B.disc || 0) + extra, 1)) + inp.finish;
+    var rows = [], paid = 0, desc = [], k = 0;
+    B.pays.forEach(function (p) {
+      if (p === B.last) return;
+      k++;
+      // ПВ — ROUND(стоимость × %), остальные платежи — стоимость × % (как на листе)
+      var amt = p.first ? round0(total * p.share) : total * p.share;
+      var name = p.first ? 'Первый платёж' : p.mid ? 'Промежуточный платёж' : (ORD[k - 1] || k + '-й') + ' платёж';
+      rows.push([p.first || !p.date ? dfmt(T) : dfmt(p.date), name, pct(p.share) + ' стоимости', amt]);
+      desc.push(pct(p.share) + (p.first || !p.date ? ' сразу' : ' до ' + dfmt(p.date)));
+      paid += amt;
+    });
+    // Ежемесячные платежи: % от стоимости, количество = ROUND((дата остатка − сегодня)/30 − 2)
+    if (B.monthly && B.final) {
+      var cnt = round0(days(T, B.final) / 30 - 2), each = total * B.monthly;
+      if (cnt > 0) {
+        rows.push(['ежемесячно', 'Ежемесячные платежи', rub(each) + ' × ' + cnt + ' мес.', each * cnt]);
+        desc.push('по ' + pct(B.monthly) + ' стоимости ежемесячно');
+        paid += each * cnt;
+      }
+    }
+    var rest = total - paid;
+    if (B.parents && !B.final) {
+      rows.push(['до 9 мес.', 'Остаток', 'с переходом в семейную ипотеку', rest, true]);
+      desc.push('остаток в течение 9 месяцев с переходом в семейную ипотеку');
+    } else {
+      rows.push([B.final ? dfmt(B.final) : '—', 'Остаток', pct(total ? rest / total : 0) + ' стоимости', rest, true]);
+      desc.push('остаток до ' + dfmt(B.final));
+    }
+    var term = B.final ? round0(days(T, B.final) / 30) : null;
+    return {
+      title: B.title, disc: B.disc || 0, total: total, rows: rows, term: term,
+      termText: B.parents ? 'до 9 мес.' : '—',
+      desc: desc.join(', ').replace(/^./, function (c) { return c.toUpperCase(); })
+    };
+  }
+  function calcAll(blocks, inp) { return blocks.map(function (b) { return calcBlock(b, inp); }); }
+
+  /* ================== ФОРМАТИРОВАНИЕ ================== */
+  var nf0 = new Intl.NumberFormat('ru-RU', { maximumFractionDigits: 0 });
+  var nfp = new Intl.NumberFormat('ru-RU', { maximumFractionDigits: 1 });
+  function rub(v) { return nf0.format(Math.round(v)) + ' ₽'; }
+  function pct(v) { return nfp.format(p15(v * 100)) + '%'; }
+  function dfmt(d) { return d ? d.toLocaleDateString('ru-RU') : '—'; }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function parseMoney(s) { var d = String(s).replace(/[^\d]/g, ''); return d ? parseInt(d, 10) : null; }
+  // Доп. скидка в процентах: «2», «1,5», «1.5». Разделитель — запятая, до 2 знаков, не больше 100
+  function cleanDisc(s) {
+    var t = String(s).replace(/\./g, ',').replace(/[^\d,]/g, '');
+    var i = t.indexOf(',');
+    if (i >= 0) t = t.slice(0, i + 1) + t.slice(i + 1).replace(/,/g, '').slice(0, 2);
+    if (i === 0) t = '0' + t;
+    if (parseFloat(t.replace(',', '.')) > 100) t = '100';
+    return t;
+  }
+  function parseDisc(s) {
+    var v = parseFloat(String(s).replace(',', '.'));
+    return isFinite(v) ? Math.min(Math.max(v, 0), 100) / 100 : 0;
+  }
+  function discLabel(d, extra) {
+    if (!d && !extra) return 'без скидки';
+    if (!extra) return 'скидка ' + pct(d);
+    if (!d) return 'доп. скидка ' + pct(extra);
+    return 'скидка ' + pct(d) + ' + ' + pct(extra);
+  }
+  function plural(n, a, b, c) { var m10 = n % 10, m100 = n % 100; return m10 === 1 && m100 !== 11 ? a : (m10 >= 2 && m10 <= 4 && (m100 < 10 || m100 >= 20) ? b : c); }
+
+  /* ================== ИНТЕРФЕЙС ================== */
+  var root = document.getElementById('rassrochka-calc');
+  if (!root) return;
+  var $ = function (id) { return document.getElementById(id); };
+  var el = { project: $('rc-project'), flat: $('rc-flat'), price: $('rc-price'), finish: $('rc-finish'), extra: $('rc-extra'), grid: $('rc-grid') };
+  var DATA = {}; // имя проекта -> список блоков рассрочек
+  var state = { project: CONFIG.defaults.project };
+
+  if (CONFIG.mortgageUrl) $('rc-nav').href = CONFIG.mortgageUrl; else $('rc-nav').hidden = true;
+  if (!CONFIG.showLogo) $('rc-logo').hidden = true;
+
+  function renderProjects() {
+    el.project.innerHTML = CONFIG.projects.map(function (p) {
+      return '<button type="button" data-p="' + esc(p.name) + '" aria-pressed="' + (p.name === state.project) + '">' + esc(p.name) + '</button>';
+    }).join('');
+  }
+
+  function readInputs() {
+    return { base: parseMoney(el.price.value) || 0, finish: parseMoney(el.finish.value) || 0, extra: parseDisc(el.extra.value) };
+  }
+
+  function card(c) {
+    var inp = readInputs();
+    var html = '<div class="rc-card">' +
+      '<div class="rc-head"><h3>' + esc(c.title) + '</h3><span class="rc-badge' + (c.disc || inp.extra ? '' : ' rc-zero') + '">' +
+        discLabel(c.disc, inp.extra) + '</span></div>' +
+      '<p class="rc-desc">' + esc(c.desc) + '</p>';
+    var discRub = inp.base + inp.finish - c.total;
+    html += '<div class="rc-total"><div><div class="rc-k">Итоговая стоимость</div><div class="rc-v">' + rub(c.total) + '</div></div>' +
+      (discRub > 0.5 ? '<div><div class="rc-k">Скидка</div><div class="rc-v rc-sm">' + rub(discRub) + '</div></div>' : '') + '</div>';
+    html += '<table><thead><tr><th>Дата</th><th>Платёж</th><th>Сумма</th></tr></thead><tbody>' +
+      c.rows.map(function (r) {
+        return '<tr' + (r[4] ? ' class="rc-final"' : '') + '><td>' + esc(r[0]) + '</td><td>' + esc(r[1]) + '<span class="rc-s2">' + esc(r[2]) + '</span></td><td>' + rub(r[3]) + '</td></tr>';
+      }).join('') + '</tbody></table>';
+    html += '<div class="rc-meta"><span>Срок рассрочки</span><b>' + (c.term != null ? c.term + ' ' + plural(c.term, 'месяц', 'месяца', 'месяцев') : esc(c.termText)) + '</b></div>';
+    var last = c.rows[c.rows.length - 1][3];
+    if (last < -0.5) html += '<div class="rc-warn">Сумма платежей больше стоимости квартиры — проверьте стоимость.</div>';
+    return html + '</div>';
+  }
+
+  function render() {
+    var B = DATA[state.project], inp = readInputs();
+    if (!B) { el.grid.innerHTML = '<div class="rc-card rc-empty">Нет данных по проекту.</div>'; return; }
+    if (!inp.base) { el.grid.innerHTML = '<div class="rc-card rc-empty">Укажите стоимость квартиры.</div>'; return; }
+    el.grid.innerHTML = calcAll(B, inp).map(card).join('');
+    postHeight();
+  }
+
+  function postHeight() {
+    if (window.parent === window) return;
+    try { window.parent.postMessage({ ipotekaCalcHeight: Math.ceil(document.documentElement.scrollHeight) }, '*'); } catch (e) {}
+  }
+
+  function useData(map, source) {
+    Object.keys(map).forEach(function (name) { if (map[name] && map[name].length) DATA[name] = map[name]; });
+    if (!DATA[state.project]) state.project = CONFIG.projects[0].name;
+    window.RassrochkaCalc.source = source;
+    renderProjects();
+    render();
+  }
+
+  function moneyInput(input) {
+    input.addEventListener('input', function () {
+      var v = parseMoney(input.value);
+      var pos = input.value.length - input.selectionStart;
+      input.value = v == null ? '' : nf0.format(v);
+      try { var p = Math.max(0, input.value.length - pos); input.setSelectionRange(p, p); } catch (e) {}
+      render();
+    });
+  }
+
+  /* ---------- Сохранение в PDF ----------
+     Отчёт собирается отдельно (A4 книжный), рисуется html2canvas и кладётся на лист jsPDF.
+     Библиотеки подгружаются только по нажатию. От прокрутки и ширины экрана результат не зависит. */
+  var PDF_LIBS = [
+    'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js'
+  ];
+  var libsLoading = null;
+  function loadScript(src) {
+    return new Promise(function (res, rej) {
+      var s = document.createElement('script');
+      s.src = src; s.async = true;
+      s.onload = res; s.onerror = function () { rej(new Error('load ' + src)); };
+      document.head.appendChild(s);
+    });
+  }
+  function loadPdfLibs() {
+    if (window.html2canvas && window.jspdf) return Promise.resolve();
+    if (!libsLoading) libsLoading = Promise.all(PDF_LIBS.map(loadScript)).then(function () {
+      if (!window.html2canvas || !window.jspdf) throw new Error('libs');
+    }).catch(function (e) { libsLoading = null; throw e; });
+    return libsLoading;
+  }
+
+  // Логотип для PDF переводим в PNG: html2canvas неверно рисует SVG
+  var logoPngCache = null;
+  function logoPng() {
+    if (logoPngCache) return Promise.resolve(logoPngCache);
+    var svg = root.querySelector('.ipc-logo-svg');
+    if (!svg) return Promise.resolve('');
+    var c = svg.cloneNode(true);
+    c.setAttribute('width', '1920'); c.setAttribute('height', '1410');
+    var src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(new XMLSerializer().serializeToString(c));
+    return new Promise(function (res) {
+      var img = new Image();
+      img.onload = function () {
+        try {
+          var cv = document.createElement('canvas');
+          cv.width = 480; cv.height = 352;
+          cv.getContext('2d').drawImage(img, 0, 0, cv.width, cv.height);
+          logoPngCache = cv.toDataURL('image/png');
+        } catch (e) { logoPngCache = ''; }
+        res(logoPngCache);
+      };
+      img.onerror = function () { res(''); };
+      img.src = src;
+    });
+  }
+
+  var PAGE_W = 794, PAGE_H = 1123; // A4 книжный при 96 dpi
+
+  function buildReport(png) {
+    var inp = readInputs(), r = calcAll(DATA[state.project], inp), now = new Date();
+    var flat = el.flat.value.trim();
+    var ds = now.toLocaleDateString('ru-RU') + ', ' + now.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+    var item = function (k, v) { return '<div>' + k + '<b>' + v + '</b></div>'; };
+    var page = document.createElement('div');
+    page.className = 'rc-report';
+    page.innerHTML =
+      '<div class="rr-head"><div><div class="rr-title">Расчёт рассрочки</div>' +
+        '<div class="rr-meta">ЖК «' + esc(state.project) + '»' + (flat ? ' · кв. ' + esc(flat) : '') + ' · ' + ds + '</div></div>' +
+        (png ? '<img class="rr-logo" src="' + png + '" width="55" height="40" alt="BAZA Development">' : '') + '</div>' +
+      '<div class="rr-inputs">' + item('Проект', 'ЖК «' + esc(state.project) + '»') + (flat ? item('Номер квартиры', esc(flat)) : '') +
+        item('Стоимость квартиры', rub(inp.base)) + (inp.finish ? item('Отделка', rub(inp.finish)) : '') +
+        (inp.extra ? item('Доп. скидка', pct(inp.extra)) : '') + '</div>' +
+      '<div class="rr-grid">' + r.map(card).join('') + '</div>';
+    var file = ('Расчёт рассрочки ' + state.project + (flat ? ' кв ' + flat : '') + ' ' + now.toLocaleDateString('ru-RU'))
+      .replace(/[\\/:*?"<>|]+/g, '-') + '.pdf';
+    return { page: page, file: file };
+  }
+
+  function renderPage(page) {
+    // Страница временно кладётся в левый верхний угол окна под содержимым сайта — посетитель её не видит
+    var host = document.createElement('div');
+    host.style.cssText = 'position:fixed;left:0;top:0;z-index:-2147483647;pointer-events:none;width:' + PAGE_W + 'px;';
+    host.appendChild(page);
+    document.body.appendChild(host);
+    var done = function () { if (host.parentNode) host.parentNode.removeChild(host); };
+    return window.html2canvas(page, {
+      scale: 2, backgroundColor: '#F5F8FB', useCORS: true, logging: false,
+      scrollX: 0, scrollY: 0, x: 0, y: 0, width: PAGE_W, height: Math.max(PAGE_H, page.offsetHeight),
+      windowWidth: PAGE_W + 200, windowHeight: Math.max(PAGE_H, page.offsetHeight) + 200
+    }).then(function (c) { done(); return c; }, function (e) { done(); throw e; });
+  }
+
+  function createPdf() {
+    return Promise.all([loadPdfLibs(), logoPng()]).then(function (res) {
+      var rep = buildReport(res[1]);
+      return renderPage(rep.page).then(function (c) {
+        var pdf = new window.jspdf.jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+        var W = 210, H = 297;
+        pdf.setFillColor(245, 248, 251); pdf.rect(0, 0, W, H, 'F');
+        var k = Math.min(W / c.width, H / c.height), w = c.width * k, h = c.height * k;
+        pdf.addImage(c.toDataURL('image/jpeg', 0.92), 'JPEG', (W - w) / 2, 0, w, h);
+        return { pdf: pdf, file: rep.file };
+      });
+    });
+  }
+
+  function savePdf() {
+    if (!readInputs().base || !DATA[state.project]) return;
+    var btn = $('rc-save'), msg = $('rc-savemsg'), label = btn.textContent;
+    btn.disabled = true; btn.textContent = 'Готовлю PDF…'; msg.textContent = '';
+    createPdf().then(function (r) {
+      r.pdf.save(r.file);
+    }).catch(function () {
+      msg.textContent = 'Не удалось сохранить PDF. Нажмите «Распечатать расчёт» и выберите «Сохранить как PDF».';
+    }).then(function () {
+      btn.disabled = false; btn.textContent = label;
+    });
+  }
+
+  window.RassrochkaCalc = { parseSheet: parseSheet, calcAll: calcAll, data: function () { return DATA; }, createPdf: createPdf };
+
+  [el.price, el.finish].forEach(moneyInput);
+  el.extra.addEventListener('input', function () {
+    var v = cleanDisc(el.extra.value);
+    if (v !== el.extra.value) el.extra.value = v;
+    render();
+  });
+  el.project.addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-p]'); if (!b) return;
+    state.project = b.getAttribute('data-p'); renderProjects(); render();
+  });
+  $('rc-print').addEventListener('click', function () { window.print(); });
+  $('rc-save').addEventListener('click', savePdf);
+  window.addEventListener('resize', postHeight);
+
+  el.price.value = CONFIG.defaults.price ? nf0.format(CONFIG.defaults.price) : '';
+  var snap = {};
+  CONFIG.projects.forEach(function (p) { if (SNAPSHOT[p.name]) snap[p.name] = parseSheet(SNAPSHOT[p.name]); });
+  useData(snap, 'копия от 19.11.2026');
+
+  if (CONFIG.liveData && window.fetch) {
+    var ctrl = typeof AbortController !== 'undefined' ? new AbortController() : null;
+    var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, 10000);
+    Promise.all(CONFIG.projects.map(function (p) {
+      return gvizRows(p.sheet, ctrl ? ctrl.signal : undefined).then(function (rows) { return [p.name, parseSheet(rows)]; }, function () { return null; });
+    })).then(function (list) {
+      clearTimeout(timer);
+      var map = {};
+      list.forEach(function (x) { if (x) map[x[0]] = x[1]; });
+      if (Object.keys(map).length) useData(map, 'таблица, ' + new Date().toLocaleString('ru-RU'));
+    });
+  }
+})();
+</script>
+<!-- ===== ВСТАВКА НА САЙТ: КОНЕЦ ===== -->
+
+</body>
+</html>
