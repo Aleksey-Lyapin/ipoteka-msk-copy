@@ -1078,7 +1078,8 @@
       add('Первый транш · ' + dfmt(new Date()), rub(r.t1) + ' · ' + pct1(r.price ? r.t1 / r.price : 0));
       add('Второй транш · ' + dfmt(r.date2), rub(r.t2) + ' · ' + pct1(r.price ? r.t2 / r.price : 0));
     }
-    if (state.overD) { add('Переплата (проценты)', rub(r.over)); add('Итого выплат банку', rub(r.tot), true); }
+    // Под глазом: переплата, итого выплат и субсидия застройщика банку в ₽ (25.11.2026; у программ без субсидии — «нет»)
+    if (state.overD) { add('Переплата (проценты)', rub(r.over)); add('Итого выплат банку', rub(r.tot), true); add('Субсидия банку', r.sub > 0 && r.subr > 0 ? rub(r.subr) : 'нет'); }
     if (CONFIG.showInternal) add('Субсидия застройщика банку', rub(r.subr) + ' · ' + pct(r.sub));
 
     var flat = el.flat.value.trim();
@@ -1093,7 +1094,7 @@
             (grace ? '<div><div class="ipc-k">' + (step ? 'Платёж с ' + (r.gm / 12 + 1) + '-го года' : save ? 'Платёж после ' + endRu : 'Платёж после льготного периода') + '</div><div class="ipc-v ipc-sm">' + rub(r.p2) + '</div></div>' : '')) +
       '</div></div>';
     el.detail.innerHTML = head + '<dl>' + dl.join('') + '</dl>' + (r.note ? '<div class="ipc-note">' + esc(r.note) + '</div>' : '') +
-      '<div class="ipc-eye-row">' + eyeBtn('detail', state.overD, 'переплату и итого выплат банку') + '</div>';
+      '<div class="ipc-eye-row">' + eyeBtn('detail', state.overD, 'переплату, итого выплат и субсидию банку') + '</div>';
   }
 
   // Значок-глаз: открытый — показать скрытое, перечёркнутый — скрыть
