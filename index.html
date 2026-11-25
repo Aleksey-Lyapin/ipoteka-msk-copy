@@ -1,0 +1,1403 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ипотечный калькулятор — ЖК «Бестселлер»</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<meta name="theme-color" content="#002346">
+<style>
+  html, body { margin: 0; padding: 0; background: #F5F8FB; }
+  @media print { html, body { background: #FFFFFF; } }
+</style>
+</head>
+<body>
+
+<!-- ===== ВСТАВКА НА САЙТ: НАЧАЛО (скопируйте всё до метки «КОНЕЦ» в HTML-блок сайта) ===== -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;700&display=swap">
+<style>
+/* Стиль BAZA Development (baza.bz): светлый фон, белые карточки 20px, тёмно-синий текст, красные акценты, «таблетки» */
+#ipoteka-calc {
+  --ipc-page: #F5F8FB;
+  --ipc-accent: #002346;
+  --ipc-accent-soft: #EDF6FF;
+  --ipc-red: #E20617;
+  --ipc-red-hover: #b50c20;
+  --ipc-red-soft: #fef3f3;
+  --ipc-text: #002346;
+  --ipc-muted: #5f7690;
+  --ipc-line: #D8E6F4;
+  --ipc-bg: #FFFFFF;
+  --ipc-bg-soft: #F5F8FB;
+  --ipc-ok: #4d7a00;
+  --ipc-ok-bg: rgba(135, 202, 0, 0.15);
+  --ipc-bad: #E20617;
+  --ipc-bad-bg: #fef3f3;
+  --ipc-warn: #E66400;
+  --ipc-field-bg: #FFFFFF;
+  --ipc-field-line: #D8E6F4;
+  --ipc-hover: #F5F8FB;
+  --ipc-sel: #EDF6FF;
+  --ipc-faint: #6C8DAF;
+  --ipc-on-accent: #FFFFFF;
+  --ipc-radius: 20px;
+  font-family: "Inter Tight", "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  color: var(--ipc-text);
+  background: var(--ipc-page);
+  font-size: 15px;
+  line-height: 1.45;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 16px;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+}
+#ipoteka-calc *, #ipoteka-calc *::before, #ipoteka-calc *::after { box-sizing: border-box; }
+#ipoteka-calc [hidden] { display: none !important; }
+#ipoteka-calc .ipc-brand { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 10px; }
+#ipoteka-calc .ipc-brand h2 { margin: 0; }
+#ipoteka-calc .ipc-logo { display: block; line-height: 0; flex-shrink: 0; margin-left: 10px; }
+#ipoteka-calc .ipc-logo-svg { display: block; height: 52px; width: auto; }
+#ipoteka-calc .ipc-brand-r { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+#ipoteka-calc .ipc-nav { display: inline-flex; align-items: center; height: 44px; padding: 0 22px; border-radius: 100px; background: var(--ipc-bg); color: var(--ipc-text); box-shadow: inset 0 0 0 1px var(--ipc-line); font-size: 15px; font-weight: 400; text-decoration: none; white-space: nowrap; transition: box-shadow .15s, color .15s; }
+#ipoteka-calc .ipc-nav:hover { box-shadow: inset 0 0 0 1px var(--ipc-red); color: var(--ipc-red); }
+#ipoteka-calc .ipc-nav:focus-visible { outline: 2px solid var(--ipc-red); outline-offset: 3px; }#ipoteka-calc .ipc-logo:focus-visible { outline: 2px solid var(--ipc-red); outline-offset: 3px; border-radius: 6px; }
+#ipoteka-calc h2 { font-size: 40px; line-height: 1.1; margin: 0 0 10px; font-weight: 700; letter-spacing: -0.02em; text-wrap: balance; }
+#ipoteka-calc h3 { font-size: 20px; line-height: 1.25; margin: 0 0 18px; font-weight: 700; letter-spacing: -0.01em; }
+#ipoteka-calc .ipc-sub { color: var(--ipc-muted); margin: 0 0 24px; max-width: 640px; font-size: 14px; }
+#ipoteka-calc .ipc-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 16px; align-items: start; }
+#ipoteka-calc .ipc-card { border-radius: var(--ipc-radius); padding: 24px; background: var(--ipc-bg); }
+#ipoteka-calc .ipc-field { margin-bottom: 16px; }
+#ipoteka-calc .ipc-field:last-child { margin-bottom: 0; }
+#ipoteka-calc label { display: block; font-weight: 400; font-size: 13px; margin-bottom: 6px; color: var(--ipc-muted); }
+#ipoteka-calc .ipc-hint { display: block; color: var(--ipc-faint); font-size: 12px; margin-top: 6px; line-height: 1.35; }
+#ipoteka-calc input, #ipoteka-calc select {
+  width: 100%; height: 48px; padding: 0 16px; font: inherit; font-size: 15px; color: var(--ipc-text);
+  border: 1px solid var(--ipc-field-line); border-radius: 12px; background: var(--ipc-field-bg); margin: 0;
+  transition: border-color .15s;
+}
+#ipoteka-calc select {
+  -webkit-appearance: none; appearance: none; padding-right: 40px; cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%23002346' stroke-width='1.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 16px center;
+}
+#ipoteka-calc input::placeholder { color: var(--ipc-faint); }
+#ipoteka-calc .ipc-suffix { position: relative; }
+#ipoteka-calc .ipc-suffix input { padding-right: 40px; }
+#ipoteka-calc .ipc-suffix span { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); color: var(--ipc-muted); pointer-events: none; font-size: 15px; }
+#ipoteka-calc input:hover, #ipoteka-calc select:hover { border-color: var(--ipc-faint); }
+#ipoteka-calc input:focus, #ipoteka-calc select:focus { outline: none; border-color: var(--ipc-accent); box-shadow: 0 0 0 3px var(--ipc-accent-soft); }
+#ipoteka-calc select:disabled, #ipoteka-calc input:disabled { background-color: var(--ipc-bg-soft); color: var(--ipc-faint); cursor: default; border-color: var(--ipc-line); }
+#ipoteka-calc .ipc-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 12px; margin-bottom: 16px; }
+#ipoteka-calc .ipc-row2 .ipc-field { margin-bottom: 0; }
+#ipoteka-calc .ipc-card > :last-child { margin-bottom: 0; }
+#ipoteka-calc .ipc-seg { display: flex; flex-wrap: wrap; gap: 8px; }
+#ipoteka-calc .ipc-seg button {
+  font: inherit; font-size: 14px; border: 1px solid var(--ipc-field-line); background: var(--ipc-field-bg); color: var(--ipc-text);
+  padding: 0 18px; height: 44px; border-radius: 100px; cursor: pointer; line-height: 1.2; transition: border-color .15s, background .15s;
+}
+#ipoteka-calc .ipc-seg button:hover { border-color: var(--ipc-faint); }
+#ipoteka-calc .ipc-seg button[aria-pressed="true"] { background: var(--ipc-accent); border-color: var(--ipc-accent); color: var(--ipc-on-accent); font-weight: 400; }
+#ipoteka-calc .ipc-seg button:focus-visible, #ipoteka-calc .ipc-btn:focus-visible, #ipoteka-calc .ipc-link:focus-visible,
+#ipoteka-calc tbody tr:focus-visible { outline: 2px solid var(--ipc-red); outline-offset: 2px; }
+#ipoteka-calc .ipc-static { font-size: 14px; color: var(--ipc-muted); }
+#ipoteka-calc .ipc-static b { color: var(--ipc-text); font-size: 17px; font-weight: 700; }
+
+#ipoteka-calc .ipc-hero { background: var(--ipc-accent); color: #FFFFFF; border-radius: 16px; padding: 22px; margin-bottom: 18px; }
+#ipoteka-calc .ipc-hero .ipc-static { color: rgba(255, 255, 255, 0.7); }
+#ipoteka-calc .ipc-prog { font-weight: 700; font-size: 20px; line-height: 1.25; letter-spacing: -0.01em; margin-bottom: 10px; }
+#ipoteka-calc .ipc-pay { display: flex; flex-wrap: wrap; gap: 12px 32px; margin-top: 18px; }
+#ipoteka-calc .ipc-pay .ipc-k { color: rgba(255, 255, 255, 0.7); font-size: 13px; margin-bottom: 2px; }
+#ipoteka-calc .ipc-pay .ipc-v { font-size: 34px; line-height: 1.1; font-weight: 700; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; white-space: nowrap; }
+#ipoteka-calc .ipc-pay .ipc-v.ipc-sm { font-size: 22px; font-weight: 400; }
+#ipoteka-calc .ipc-badge { display: inline-block; font-size: 12px; font-weight: 400; padding: 4px 10px; border-radius: 100px; white-space: nowrap; }
+#ipoteka-calc .ipc-badge.ok { color: var(--ipc-ok); background: var(--ipc-ok-bg); }
+#ipoteka-calc .ipc-badge.bad { color: var(--ipc-bad); background: var(--ipc-bad-bg); }
+#ipoteka-calc .ipc-hero .ipc-badge.ok { color: #c8f06e; background: rgba(135, 202, 0, 0.2); }
+#ipoteka-calc .ipc-hero .ipc-badge.bad { color: #ffb3b9; background: rgba(226, 6, 23, 0.3); }
+#ipoteka-calc dl { margin: 0; display: grid; grid-template-columns: 1fr auto; }
+#ipoteka-calc dt, #ipoteka-calc dd { margin: 0; padding: 6px 0; border-bottom: 1px solid var(--ipc-line); }
+#ipoteka-calc dt { color: var(--ipc-muted); padding-right: 12px; font-size: 14px; }
+#ipoteka-calc dd { text-align: right; font-variant-numeric: tabular-nums; font-weight: 400; white-space: nowrap; }
+#ipoteka-calc dt.ipc-strong, #ipoteka-calc dd.ipc-strong { color: var(--ipc-text); font-weight: 700; }
+#ipoteka-calc .ipc-note { margin-top: 14px; font-size: 13px; color: var(--ipc-warn); }
+#ipoteka-calc .ipc-alert { background: var(--ipc-bad-bg); color: var(--ipc-bad); border-radius: 12px; padding: 12px 14px; font-weight: 400; margin-bottom: 14px; font-size: 14px; }
+#ipoteka-calc .ipc-alert:empty { display: none; }
+
+#ipoteka-calc .ipc-tablewrap { margin-top: 16px; background: var(--ipc-bg); border-radius: var(--ipc-radius); padding: 24px; }
+#ipoteka-calc .ipc-tablehead { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px 16px; margin-bottom: 14px; }
+#ipoteka-calc .ipc-tablehead h3 { margin: 0; }
+/* Фильтры таблицы программ */
+#ipoteka-calc .ipc-filters { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.8fr) minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1.5fr); gap: 12px; align-items: end; margin-bottom: 16px; }
+#ipoteka-calc .ipc-filters label, #ipoteka-calc .ipc-flabel { display: block; font-weight: 500; font-size: 12px; margin-bottom: 4px; color: var(--ipc-muted); }
+#ipoteka-calc .ipc-filters input, #ipoteka-calc .ipc-filters select { height: 40px; font-size: 14px; padding: 0 12px; border-radius: 10px; }
+#ipoteka-calc .ipc-filters select { padding-right: 34px; background-position: right 12px center; }
+#ipoteka-calc .ipc-range { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+/* Значок-глаз: показать/скрыть «Переплату» и «Итого выплат банку» (в расчёте) и столбец «Переплата» (в таблице) */
+#ipoteka-calc .ipc-eye { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; padding: 0; flex: none;
+  border: 1px solid var(--ipc-line); border-radius: 50%; background: #FFFFFF; color: var(--ipc-muted); cursor: pointer; vertical-align: middle; }
+#ipoteka-calc .ipc-eye:hover, #ipoteka-calc .ipc-eye[aria-pressed="true"] { color: var(--ipc-accent); border-color: var(--ipc-accent); }
+#ipoteka-calc .ipc-eye svg { width: 17px; height: 17px; }
+#ipoteka-calc .ipc-eye-row { display: flex; justify-content: flex-end; margin-top: 8px; }
+#ipoteka-calc .ipc-th-l { display: flex; align-items: center; gap: 10px; }
+.ipc-report .ipc-eye, .ipc-report .ipc-eye-row { display: none !important; }
+#ipoteka-calc .ipc-f-reset { grid-column: 1 / -1; justify-self: start; }
+#ipoteka-calc tr.ipc-empty-row td { text-align: center !important; color: var(--ipc-muted); cursor: default; }
+#ipoteka-calc .ipc-link { font: inherit; font-size: 13px; color: var(--ipc-red); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: none; border-bottom: 1px solid var(--ipc-red-soft); }
+#ipoteka-calc .ipc-link:hover { color: var(--ipc-red-hover); }
+#ipoteka-calc .ipc-scroll { overflow-x: auto; }
+#ipoteka-calc table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 13.5px; }
+#ipoteka-calc th { color: var(--ipc-faint); font-weight: 400; font-size: 12px; text-align: right; padding: 0 8px 10px; border-bottom: 1px solid var(--ipc-line); vertical-align: bottom; }
+#ipoteka-calc td { padding: 9px 8px; border-bottom: 1px solid var(--ipc-line); text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; vertical-align: top; }
+#ipoteka-calc th:first-child, #ipoteka-calc td:first-child,
+#ipoteka-calc th:nth-child(2), #ipoteka-calc td:nth-child(2) { text-align: left; }
+#ipoteka-calc td:first-child { color: var(--ipc-faint); }
+#ipoteka-calc td:nth-child(2) { white-space: normal; min-width: 180px; font-weight: 400; }
+#ipoteka-calc th:nth-child(3), #ipoteka-calc td:nth-child(3) { text-align: left; }
+#ipoteka-calc th:first-child, #ipoteka-calc td:first-child { padding-left: 4px; }
+#ipoteka-calc th:last-child, #ipoteka-calc td:last-child { padding-right: 0; }
+#ipoteka-calc tbody tr { cursor: pointer; transition: background .15s; }
+#ipoteka-calc tbody tr:hover td { background: var(--ipc-hover); }
+#ipoteka-calc tbody tr.ipc-sel td { background: var(--ipc-sel); }
+#ipoteka-calc tbody tr.ipc-sel td:first-child { box-shadow: inset 3px 0 0 var(--ipc-red); }
+#ipoteka-calc tbody tr.ipc-na td { color: var(--ipc-faint); }
+#ipoteka-calc tbody tr:last-child td { border-bottom: 0; }
+#ipoteka-calc tr.ipc-more-row td { display: table-cell; text-align: center !important; padding: 12px 8px; background: transparent !important; cursor: default; }
+#ipoteka-calc tr.ipc-more-row { cursor: default; }
+#ipoteka-calc .ipc-s2 { display: block; color: var(--ipc-faint); font-size: 12px; font-weight: 400; margin-top: 2px; }
+#ipoteka-calc .ipc-pvup { color: var(--ipc-warn); font-weight: 400; }
+
+#ipoteka-calc details { margin-top: 16px; font-size: 13px; color: var(--ipc-muted); background: var(--ipc-bg); border-radius: var(--ipc-radius); padding: 18px 24px; }
+#ipoteka-calc summary { cursor: pointer; color: var(--ipc-text); font-weight: 400; font-size: 14px; }
+#ipoteka-calc details ul { padding-left: 18px; margin: 12px 0 0; }
+#ipoteka-calc details li { margin-bottom: 6px; }
+#ipoteka-calc .ipc-foot { margin-top: 16px; font-size: 12px; color: var(--ipc-faint); display: flex; justify-content: flex-end; align-items: center; flex-wrap: wrap; gap: 12px; }
+#ipoteka-calc .ipc-btn {
+  font: inherit; font-size: 14px; font-weight: 400; border: 0; background: var(--ipc-red); color: #FFFFFF;
+  border-radius: 100px; padding: 0 24px; height: 44px; cursor: pointer; transition: background .15s;
+}
+#ipoteka-calc .ipc-btn:hover { background: var(--ipc-red-hover); }
+#ipoteka-calc .ipc-btn:disabled { opacity: .6; cursor: progress; }
+#ipoteka-calc .ipc-btn-2 { background: var(--ipc-bg); color: var(--ipc-text); box-shadow: inset 0 0 0 1px var(--ipc-line); font-weight: 400; }
+#ipoteka-calc .ipc-btn-2:hover { background: var(--ipc-bg); box-shadow: inset 0 0 0 1px var(--ipc-faint); }
+#ipoteka-calc .ipc-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
+#ipoteka-calc .ipc-savemsg { font-size: 13px; color: var(--ipc-bad); max-width: 420px; }
+#ipoteka-calc .ipc-savemsg:empty { display: none; }
+/* Отчёт для PDF (лист A4 альбомный). Собирается отдельно от экрана, всегда в светлой теме */
+.ipc-report { font-family: "Inter Tight", "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; color: #002346; background: #F5F8FB; font-size: 13px; line-height: 1.4; padding: 18px; -webkit-font-smoothing: antialiased; }
+.ipc-report * { box-sizing: border-box; }
+.ipc-report.ipc-r-page { box-sizing: border-box; width: 1123px; min-height: 794px; padding: 28px 32px; }
+.ipc-report .ipc-r-head { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 14px; }
+.ipc-report .ipc-r-title { font-size: 28px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; }
+.ipc-report .ipc-r-meta { font-size: 13px; color: #5f7690; margin-top: 4px; }
+.ipc-report .ipc-r-logo { display: block; height: 44px; width: auto; }
+.ipc-report .ipc-r-grid { display: grid; grid-template-columns: 5fr 7fr; gap: 12px; align-items: start; }
+.ipc-report .ipc-r-card { background: #FFFFFF; border-radius: 16px; padding: 16px 18px; }
+.ipc-report .ipc-r-h { font-size: 16px; font-weight: 700; margin-bottom: 10px; }
+.ipc-report dl { margin: 0; display: grid; grid-template-columns: 1fr auto; }
+.ipc-report dt, .ipc-report dd { margin: 0; padding: 5px 0; border-bottom: 1px solid #D8E6F4; }
+.ipc-report dt { color: #5f7690; padding-right: 10px; }
+.ipc-report dd { text-align: right; font-weight: 400; white-space: nowrap; font-variant-numeric: normal; }
+.ipc-report .ipc-strong { color: #002346; font-weight: 700; }
+.ipc-report .ipc-hero { background: #002346; color: #FFFFFF; border-radius: 12px; padding: 14px 16px; margin-bottom: 8px; }
+.ipc-report .ipc-hero .ipc-static { color: rgba(255, 255, 255, 0.7); }
+.ipc-report .ipc-prog { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+.ipc-report .ipc-pay { display: flex; flex-wrap: wrap; gap: 6px 28px; margin-top: 10px; }
+.ipc-report .ipc-pay .ipc-k { color: rgba(255, 255, 255, 0.7); font-size: 12px; }
+.ipc-report .ipc-pay .ipc-v { font-size: 26px; font-weight: 700; letter-spacing: -0.02em; white-space: nowrap; line-height: 1.15; }
+.ipc-report .ipc-pay .ipc-v.ipc-sm { font-size: 18px; font-weight: 400; }
+.ipc-report .ipc-badge { display: inline-block; font-size: 11px; font-weight: 400; padding: 3px 9px; border-radius: 100px; white-space: nowrap; }
+.ipc-report .ipc-badge.ok { color: #4d7a00; background: #eaf5d6; }
+.ipc-report .ipc-badge.bad { color: #E20617; background: #fef3f3; }
+.ipc-report .ipc-hero .ipc-badge.ok { color: #c8f06e; background: #24441f; }
+.ipc-report .ipc-hero .ipc-badge.bad { color: #ffb3b9; background: #5a1a2a; }
+.ipc-report .ipc-note { margin-top: 8px; font-size: 12px; color: #E66400; }
+.ipc-report table { width: 100%; border-collapse: collapse; font-size: 11.5px; }
+.ipc-report th { color: #6C8DAF; font-weight: 400; font-size: 10.5px; text-align: right; padding: 0 5px 6px; border-bottom: 1px solid #D8E6F4; vertical-align: bottom; }
+.ipc-report td { padding: 7px 5px; border-bottom: 1px solid #D8E6F4; text-align: right; white-space: nowrap; vertical-align: top; font-variant-numeric: normal; }
+.ipc-report th:first-child, .ipc-report td:first-child, .ipc-report th:nth-child(2), .ipc-report td:nth-child(2) { text-align: left; }
+.ipc-report td:first-child { color: #6C8DAF; }
+.ipc-report td:nth-child(2) { white-space: normal; font-weight: 400; }
+.ipc-report th:nth-child(3), .ipc-report td:nth-child(3) { text-align: left; }
+.ipc-report tr.ipc-sel td { background: #EDF6FF; }
+.ipc-report tr.ipc-sel td:first-child { box-shadow: inset 3px 0 0 #E20617; }
+.ipc-report tr.ipc-na td { color: #6C8DAF; }
+.ipc-report tr:last-child td { border-bottom: 0; }
+.ipc-report .ipc-s2 { display: block; color: #6C8DAF; font-size: 10.5px; font-weight: 400; margin-top: 1px; }
+.ipc-report .ipc-pvup { color: #E66400; font-weight: 400; }
+.ipc-report .ipc-r-table { margin-top: 12px; }
+.ipc-report .ipc-r-foot { margin-top: 10px; font-size: 10.5px; color: #6C8DAF; }
+
+@media (prefers-reduced-motion: reduce) { #ipoteka-calc * { transition: none !important; } }
+@media (max-width: 860px) {
+  #ipoteka-calc .ipc-grid { grid-template-columns: minmax(0, 1fr); }
+  #ipoteka-calc .ipc-filters { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+}
+@media (max-width: 640px) {
+  #ipoteka-calc { padding: 16px; }
+  #ipoteka-calc .ipc-logo-svg { height: 38px; }
+  #ipoteka-calc .ipc-brand-r { gap: 10px; }
+  #ipoteka-calc .ipc-nav { height: 36px; padding: 0 14px; font-size: 13px; }
+    #ipoteka-calc h2 { font-size: 28px; }
+  #ipoteka-calc .ipc-card, #ipoteka-calc .ipc-tablewrap { padding: 18px; }
+  #ipoteka-calc .ipc-row2 { grid-template-columns: 1fr; }
+  #ipoteka-calc .ipc-pay .ipc-v { font-size: 30px; }
+  #ipoteka-calc .ipc-tablewrap { background: transparent; padding: 0; }
+  #ipoteka-calc .ipc-scroll { overflow: visible; }
+  #ipoteka-calc table, #ipoteka-calc tbody, #ipoteka-calc tr, #ipoteka-calc td { display: block; width: 100%; }
+  #ipoteka-calc thead { display: none; }
+  #ipoteka-calc tbody tr { background: var(--ipc-bg); border-radius: 16px; margin-bottom: 10px; padding: 8px 16px; }
+  #ipoteka-calc tbody tr:hover td, #ipoteka-calc tbody tr.ipc-sel td { background: transparent; }
+  #ipoteka-calc tbody tr.ipc-sel { box-shadow: inset 0 0 0 2px var(--ipc-red); }
+  #ipoteka-calc tbody tr.ipc-sel td:first-child { box-shadow: none; }
+  #ipoteka-calc td { display: flex; justify-content: space-between; gap: 12px; padding: 6px 0; border-bottom: 1px solid var(--ipc-line); white-space: normal; text-align: right; }
+  #ipoteka-calc td::before { content: attr(data-l); color: var(--ipc-muted); text-align: left; font-weight: 400; }
+  #ipoteka-calc td:first-child { display: none; }
+  #ipoteka-calc td:nth-child(2) { display: block; font-weight: 400; font-size: 15px; min-width: 0; }
+  #ipoteka-calc td:nth-child(2)::before { content: none; }
+  #ipoteka-calc tbody tr td:last-child { border-bottom: 0; }
+  #ipoteka-calc tr.ipc-more-row { background: transparent; padding: 0; }
+  #ipoteka-calc tr.ipc-more-row td { display: block !important; text-align: center; border: 0; }
+  #ipoteka-calc tr.ipc-more-row td::before { content: none; }
+  #ipoteka-calc tr.ipc-empty-row td { display: block !important; text-align: center; border: 0; }
+  #ipoteka-calc tr.ipc-empty-row td::before { content: none; }
+}
+/* Печать: A4 альбомный. Лист 1 — исходные данные и расчёт выбранной программы, лист 2 — все программы */
+/* узкий телефон: заголовок и логотип в первой строке, кнопка «Калькулятор рассрочки» — под ними */
+@media (max-width: 960px) {
+  #ipoteka-calc .ipc-brand { flex-wrap: wrap; gap: 6px 12px; justify-content: flex-start; }
+  #ipoteka-calc .ipc-brand::after { content: ''; order: 2; flex-basis: 100%; }
+  #ipoteka-calc .ipc-brand h2 { flex: 1 1 0; min-width: 0; }
+  #ipoteka-calc .ipc-brand-r { display: contents; }
+  #ipoteka-calc .ipc-nav { order: 3; }
+}
+@page { size: A4 landscape; margin: 8mm; }
+@media print {
+  #ipoteka-calc { background: #FFFFFF; padding: 0; max-width: none; font-size: 12px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  #ipoteka-calc .ipc-actions, #ipoteka-calc .ipc-link, #ipoteka-calc details, #ipoteka-calc .ipc-sub, #ipoteka-calc .ipc-nav,
+  #ipoteka-calc .ipc-eye, #ipoteka-calc .ipc-eye-row,
+  #ipoteka-calc .ipc-hint, #ipoteka-calc #ipc-pickinfo, #ipoteka-calc .ipc-foot, #ipoteka-calc .ipc-filters { display: none !important; }
+  #ipoteka-calc .ipc-brand { margin-bottom: 10px; }
+  #ipoteka-calc h2 { font-size: 26px; }
+  #ipoteka-calc h3 { font-size: 15px; margin-bottom: 8px; }
+  #ipoteka-calc .ipc-logo-svg { height: 38px; }
+  #ipoteka-calc .ipc-brand-r { gap: 10px; }
+  #ipoteka-calc .ipc-nav { height: 36px; padding: 0 14px; font-size: 13px; }
+  #ipoteka-calc .ipc-grid { grid-template-columns: 5fr 6fr; gap: 10px; }
+  #ipoteka-calc .ipc-card { padding: 12px 16px; border: 1px solid var(--ipc-line); break-inside: avoid; page-break-inside: avoid; }
+  #ipoteka-calc label { font-size: 11px; margin-bottom: 2px; }
+  #ipoteka-calc input, #ipoteka-calc select { height: 30px; font-size: 12px; padding: 0 10px; border-radius: 8px; }
+  #ipoteka-calc select { background-position: right 10px center; }
+  #ipoteka-calc .ipc-row2 { gap: 8px; margin-bottom: 8px; }
+  #ipoteka-calc .ipc-field { margin-bottom: 8px; }
+  #ipoteka-calc .ipc-seg { gap: 6px; }
+  #ipoteka-calc .ipc-seg button { height: 28px; padding: 0 12px; font-size: 11.5px; }
+  #ipoteka-calc .ipc-hero { padding: 12px 14px; margin-bottom: 8px; border-radius: 12px; }
+  #ipoteka-calc .ipc-prog { font-size: 15px; margin-bottom: 6px; }
+  #ipoteka-calc .ipc-pay { margin-top: 8px; gap: 4px 24px; }
+  #ipoteka-calc .ipc-pay .ipc-v { font-size: 24px; }
+  #ipoteka-calc .ipc-pay .ipc-v.ipc-sm { font-size: 17px; }
+  #ipoteka-calc dt, #ipoteka-calc dd { padding: 3px 0; font-size: 12px; }
+  #ipoteka-calc .ipc-note { margin-top: 6px; font-size: 11px; }
+  #ipoteka-calc .ipc-tablewrap { break-before: page; page-break-before: always; margin-top: 0; padding: 12px 16px; border: 1px solid var(--ipc-line); }
+  #ipoteka-calc .ipc-scroll { overflow: visible; }
+  #ipoteka-calc table { font-size: 11px; }
+  #ipoteka-calc th { padding: 0 5px 6px; font-size: 10px; }
+  #ipoteka-calc td { padding: 6px 5px; }
+  #ipoteka-calc td:nth-child(2) { min-width: 150px; }
+  #ipoteka-calc tbody tr { break-inside: avoid; page-break-inside: avoid; }
+  #ipoteka-calc tr.ipc-more-row { display: none !important; }
+  #ipoteka-calc .ipc-s2 { font-size: 10px; }
+  #ipoteka-calc .ipc-badge { font-size: 10.5px; padding: 3px 8px; }
+}
+</style>
+
+<div id="ipoteka-calc">
+  <div class="ipc-brand">
+    <h2>Ипотечный калькулятор</h2>
+    <div class="ipc-brand-r">
+      <a class="ipc-nav" id="ipc-all" href="programmy.html">Все программы</a>
+      <a class="ipc-nav" id="ipc-nav" href="rassrochka.html">Калькулятор рассрочки</a>
+      <a class="ipc-logo" id="ipc-logo" href="https://baza.bz/" target="_blank" rel="noopener"><svg class="ipc-logo-svg" viewBox="0 0 1920 1410" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="BAZA Development"> <path fill="#E20617" d="M321.26 434.2c60.79-30.35 88.08-91.05 88.08-186.06v-32.99C409.33 72.63 348.55 2.69 207.13 2.69H1.19v923.72h214.62c136.46 0 207.17-76.54 207.17-219.05v-75.22c0-97.65-28.53-167.59-101.72-197.94zM137.66 134.65h65.75c48.38 0 69.47 29.04 69.47 95.01v51.46c0 73.89-31.02 97.65-81.88 97.65h-53.34v-244.13zm148.87 568.75c0 68.62-24.81 91.05-70.71 91.05h-78.16v-283.71h60.79c62.03 0 88.08 26.39 88.08 112.17v80.49zM607.94 2.69l-139.08 923.72h125.42l23.59-167.59h167.64l23.59 167.59h137.84L807.87 2.69h-199.92zm27.32 630.77l65.81-467.14 65.81 467.14h-131.63z"></path> <polygon fill="#E20617" points="993.59 134.65 1252.87 134.65 993.59 797.09 993.59 926.41 1393.05 926.41 1393.05 794.46 1133.78 794.46 1393.05 132.01 1393.05 2.69 993.59 2.69 993.59 134.65"></polygon> <path fill="#E20617" d="M1779.58 2.69h-200.15l-139.23 923.72h125.56l23.62-167.59h167.82l23.62 167.59h137.99L1779.58 2.69zm-172.8 630.77l65.89-467.14 65.88 467.14h-131.77zM2.11 1094.71h77.49c48.99 0 73.03 27.17 73.03 77.04v157.65c0 49.88-24.05 77.04-73.03 77.04H2.11v-311.73zm48.99 44.53v222.66h27.61c15.59 0 24.94-8.02 24.94-30.28v-162.1c0-22.27-9.35-30.28-24.94-30.28h-27.61zM232.79 1226.08h67.24v44.53h-67.24v91.29h84.61v44.53h-133.6v-311.73h133.6v44.53h-84.61v86.84zM421.6 1348.99l37.41-254.28h44.98l-48.1 311.73h-73.03l-48.1-311.73h49.43l37.41 254.28zM575.69 1226.08h67.24v44.53h-67.24v91.29h84.61v44.53h-133.6v-311.73h133.6v44.53h-84.61v86.84zM690.58 1094.71h48.99v267.2h80.6v44.53h-129.59v-311.73zM837.53 1169.52c0-49.88 26.27-78.38 74.37-78.38s74.37 28.5 74.37 78.38v162.1c0 49.88-26.27 78.38-74.37 78.38s-74.37-28.5-74.37-78.38v-162.1zm48.99 165.22c0 22.27 9.8 30.73 25.38 30.73s25.38-8.46 25.38-30.73v-168.33c0-22.27-9.8-30.73-25.38-30.73s-25.38 8.46-25.38 30.73v168.33zM1163.07 1171.75v40.52c0 49.88-24.05 77.04-73.03 77.04h-23.16v117.12h-48.99v-311.73h72.14c48.99 0 73.03 27.17 73.03 77.04zm-96.19-32.51v105.54h23.16c15.59 0 24.05-7.13 24.05-29.39v-46.76c0-22.27-8.46-29.39-24.05-29.39h-23.16zM1289.54 1316.04l33.4-221.33h68.14v311.73h-46.31v-223.55l-33.84 223.55h-46.31l-36.52-220.44v220.44h-42.75v-311.73h68.14l36.07 221.33zM1475.68 1226.08h67.24v44.53h-67.24v91.29h84.61v44.53h-133.6v-311.73h133.6v44.53h-84.61v86.84zM1634.22 1180.66v225.78h-44.09v-311.73h61.46l50.32 186.59v-186.59h43.64v311.73h-50.32l-61.01-225.78zM1766.48 1094.71h151.41v44.53h-51.21v267.2h-48.99v-267.2h-51.21v-44.53z"></path> </svg></a>
+    </div>
+  </div>
+  <p class="ipc-sub">ЖК «Бестселлер», Москва. Укажите условия — калькулятор подберёт программу с наименьшим платежом и покажет все программы проекта.</p>
+  <div class="ipc-grid">
+    <div class="ipc-card">
+      <h3>Исходные данные</h3>
+      <div class="ipc-row2">
+        <div class="ipc-field">
+          <label for="ipc-project">Проект</label>
+          <select id="ipc-project"></select>
+        </div>
+        <div class="ipc-field">
+          <label for="ipc-flat">Номер квартиры</label>
+          <input id="ipc-flat" type="text" autocomplete="off" placeholder="указать">
+        </div>
+      </div>
+      <div class="ipc-row2">
+        <div class="ipc-field">
+          <label for="ipc-price">Стоимость квартиры, ₽</label>
+          <input id="ipc-price" type="text" inputmode="numeric" autocomplete="off">
+          <span class="ipc-hint">Базовая цена без скидки</span>
+        </div>
+        <div class="ipc-field">
+          <label for="ipc-finish">Отделка, ₽</label>
+          <input id="ipc-finish" type="text" inputmode="numeric" autocomplete="off" placeholder="0">
+          <span class="ipc-hint">Добавляется к цене и входит в кредит</span>
+        </div>
+      </div>
+      <div class="ipc-row2" id="ipc-disc-row">
+        <div class="ipc-field">
+          <label for="ipc-disc">Скидка на квартиру</label>
+          <div class="ipc-suffix"><input id="ipc-disc" type="text" inputmode="decimal" autocomplete="off" placeholder="0"><span aria-hidden="true">%</span></div>
+        </div>
+      </div>
+      <div class="ipc-field">
+        <label id="ipc-type-l">Тип ипотеки</label>
+        <div class="ipc-seg" id="ipc-type" role="group" aria-labelledby="ipc-type-l"></div>
+      </div>
+      <div class="ipc-field">
+        <label for="ipc-kids">Количество детей</label>
+        <select id="ipc-kids"></select>
+        <span class="ipc-hint" id="ipc-kids-hint">Для семейной и комбо-ипотеки: определяет ставку, льготный период и лимит кредита</span>
+      </div>
+      <div class="ipc-row2">
+        <div class="ipc-field">
+          <label for="ipc-pv">Первоначальный взнос, ₽</label>
+          <input id="ipc-pv" type="text" inputmode="numeric" autocomplete="off" placeholder="минимальный">
+          <span class="ipc-hint">Пусто — минимальный. Меньше минимума — увеличится автоматически</span>
+        </div>
+        <div class="ipc-field">
+          <label for="ipc-term">Срок, лет</label>
+          <input id="ipc-term" type="number" inputmode="decimal" min="1" max="30" step="1" placeholder="максимальный">
+          <span class="ipc-hint">Не больше максимального срока программы</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ipc-card" id="ipc-result">
+      <h3>Расчёт выбранной программы</h3>
+      <div class="ipc-alert" id="ipc-alert"></div>
+      <div id="ipc-detail"></div>
+    </div>
+  </div>
+
+  <div class="ipc-tablewrap">
+    <div class="ipc-tablehead">
+      <div class="ipc-th-l"><h3 id="ipc-table-title">Все программы проекта</h3><span id="ipc-eye-table"></span></div>
+      <span class="ipc-static" id="ipc-pickinfo"></span>
+    </div>
+    <div class="ipc-filters" id="ipc-filters">
+      <div class="ipc-ff">
+        <label for="ipc-f-bank">Банк</label>
+        <select id="ipc-f-bank"></select>
+      </div>
+      <div class="ipc-ff">
+        <label for="ipc-f-rate">Ставка до, %</label>
+        <input id="ipc-f-rate" type="text" inputmode="decimal" autocomplete="off" placeholder="любая">
+      </div>
+      <div class="ipc-ff">
+        <span class="ipc-flabel" id="ipc-f-price-l">Итоговая цена, ₽</span>
+        <div class="ipc-range" role="group" aria-labelledby="ipc-f-price-l">
+          <input id="ipc-f-price-from" type="text" inputmode="numeric" autocomplete="off" placeholder="от" aria-label="Итоговая цена от">
+          <input id="ipc-f-price-to" type="text" inputmode="numeric" autocomplete="off" placeholder="до" aria-label="Итоговая цена до">
+        </div>
+      </div>
+      <div class="ipc-ff">
+        <label for="ipc-f-pv">ПВ до, ₽</label>
+        <input id="ipc-f-pv" type="text" inputmode="numeric" autocomplete="off" placeholder="любой">
+      </div>
+      <div class="ipc-ff">
+        <span class="ipc-flabel" id="ipc-f-pay-l">Платёж, ₽</span>
+        <div class="ipc-range" role="group" aria-labelledby="ipc-f-pay-l">
+          <input id="ipc-f-pay-from" type="text" inputmode="numeric" autocomplete="off" placeholder="от" aria-label="Платёж от">
+          <input id="ipc-f-pay-to" type="text" inputmode="numeric" autocomplete="off" placeholder="до" aria-label="Платёж до">
+        </div>
+      </div>
+      <button type="button" class="ipc-link ipc-f-reset" id="ipc-f-reset" hidden>Сбросить фильтры</button>
+    </div>
+    <div class="ipc-scroll">
+      <table>
+        <thead id="ipc-thead"></thead>
+        <tbody id="ipc-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <details hidden>
+    <summary>Как считается</summary>
+    <ul id="ipc-notes"></ul>
+  </details>
+
+  <div class="ipc-foot">
+    <div class="ipc-actions">
+      <span class="ipc-savemsg" id="ipc-savemsg" role="status"></span>
+      <button type="button" class="ipc-btn ipc-btn-2" id="ipc-print">Распечатать расчёт</button>
+      <button type="button" class="ipc-btn" id="ipc-save">Сохранить PDF</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ================== НАСТРОЙКИ ================== */
+  var CONFIG = Object.assign({
+    // ID Google Таблицы с программами. Таблица должна быть доступна «всем, у кого есть ссылка» (просмотр).
+    sheetId: '13obtdqMiDQv0a_7CC7b0LsY2UZJA_xFZd6JtBN3uDRk',
+    // Лист с программами (колонки A–O как на листе «Программы»)
+    programsSheet: 'Программы_Мск',
+    // Лист комбо-ипотеки (колонки A–P: … D ставка семейная · E ставка базовая · K макс. кредит по семейной · L мин. кредит · M лимит · N субсидия · P дети)
+    comboSheet: 'Комбо_Мск',
+    // Лист траншевой ипотеки (колонки A–U: … F первый транш % · G второй транш % · H скидка · S даты выдачи траншей)
+    trancheSheet: 'Траншевая_Мск',
+    // Дата второго транша, если в колонке S даты нет (ГГГГ-ММ-ДД)
+    trancheDate2: '2027-06-30',
+    // true — при открытии страницы подтягивать актуальные программы из таблицы (если не удалось — встроенная копия ниже)
+    liveData: true,
+    // true — показывать внутренние данные: субсидию застройщика банку (₽ и %). Для публичного сайта — false.
+    showInternal: false,
+    // true — логотип BAZA справа от заголовка. При вставке прямо на baza.bz, где логотип уже есть в шапке сайта, поставьте false
+    showLogo: true,
+    // Типы ипотеки, где все подходящие программы показываются сразу (без «Показать все программы»)
+    showAllTypes: ['IT ипотека', 'Семейная ипотека', 'Комбо-ипотека', 'Траншевая ипотека'],
+    // true — у программ с субсидией застройщика (> 0%) скидка на квартиру обнуляется: цена = базовая + отделка;
+    // программа показывается, только если субсидия в ₽ (кредит × % субсидии) не больше скидки в ₽ (базовая цена × скидка)
+    subsidyNoDiscount: true,
+    // Своя скидка на квартиру у программы, по проектам (вместо введённой скидки): часть названия + льготная ставка (null — любая).
+    // Проекта нет в disc — обычная скидка
+    // Комбо-ипотека: средневзвешенная ставка на весь срок, но через years лет растёт на add (часть названия программы).
+    // Первые years лет платёж как раньше (семейная и базовая части), затем остаток долга — аннуитет по (средневзвешенная + add)
+    comboStepUp: [{ name: '(ВТБ)', years: 15, add: 0.04 }],
+    // Совком 4,4% в этих проектах — две программы: с накоплением ПВ (pvSaving) и без накопления (как раньше); своя скидка — у обеих
+    pvSavingSplit: { name: 'Ипотека для всех на срок строительства (Совком)', r1: 0.044, projects: ['Бестселлер'],
+      save: 'Ипотека для всех на срок строительства с накоплением на ПВ (Совком)', no: 'Ипотека для всех на срок строительства без накопления на ПВ (Совком)' },
+    // Накопление ПВ в период строительства: Совком 4,4% — сразу ПВ 5%, остаток до мин. ПВ программы (20,1%) — равными платежами
+    // по целым месяцам до даты проекта (вместе с платежом по ипотеке); льготная ставка — до этой даты, потом основная. Кредит — как при ПВ 20,1%
+    pvSaving: [{ name: 'Ипотека для всех на срок строительства с накоплением на ПВ (Совком)', r1: 0.044, minPv: 0.05,
+      projects: { 'Бестселлер': '2028-02-29' } }],
+    programDiscounts: [{
+      name: 'ипотека для всех на срок строительства (Совком)', r1: 0.044,
+      disc: { 'Бестселлер': 0.02 }   // 0 — без скидки (базовая цена)
+    }, {
+      // exact — название целиком (без «Субсид. семейная ипотека на весь срок (Сбер)»), любое количество детей
+      name: 'Семейная ипотека (Сбер)', exact: true,
+      disc: { 'Бестселлер': 0.04 }
+    }],
+    // Адрес калькулятора рассрочки (кнопка «Рассрочка» в шапке). Пусто — кнопка скрыта
+    installmentUrl: 'rassrochka.html',
+    // Значения по умолчанию
+    defaults: { project: 'Бестселлер', price: 20000000, discount: 0.06, type: 'Семейная ипотека', kids: 'один ребёнок', term: 30 }
+  }, window.IPOTEKA_CALC_CONFIG || {});
+
+  /* Встроенная копия данных таблицы (на случай, если таблица недоступна). Снята: 19.11.2026 */
+  var SNAPSHOT = {"projects":["Бестселлер"],"types":["Семейная ипотека","IT ипотека","Ипотека для всех"],"tolerance":0.002,"threshold":0.01,"programs":[["Бестселлер","Ипотека для всех","Стандартная ипотека (ДОМ.РФ)",0.188,0.188,"-",5.0,30.0,0.201,0.499999999999999,300000.0,100000000,null,"Все лоты","-"],["Бестселлер","Ипотека для всех","Стандартная ипотека (ДОМ.РФ)",0.178,0.178,"-",5.0,30.0,0.5,1.0,300000.0,100000000,null,"Все лоты","-"],["Бестселлер","Ипотека для всех","Стандартная ипотека (Абсолют)",0.181,0.181,"-",5.0,22.5,0.201,1.0,300000.0,50000000,null,"Все лоты","-"],["Бестселлер","Ипотека для всех","Стандартная ипотека (Сбербанк)",0.192,0.192,"–",5.0,30.0,0.201,1.0,300000.0,30000000,null,"Все лоты","-"],["Бестселлер","Семейная ипотека","Семейная ипотека (Сбер)",0.12,0.1,"–",5.0,30.0,0.201,1.0,300000.0,12000000,null,"Все лоты","один ребёнок"],["Бестселлер","Семейная ипотека","Семейная ипотека (Сбер)",0.1,0.08,"–",5.0,30.0,0.201,1.0,300000.0,15000000,null,"Все лоты","двое детей"],["Бестселлер","Семейная ипотека","Семейная ипотека (Сбер)",0.08,0.06,"–",5.0,30.0,0.201,1.0,300000.0,18000000,null,"Все лоты","трое детей"],["Бестселлер","Семейная ипотека","Семейная ипотека (Сбер)",0.06,0.04,"–",5.0,30.0,0.201,1.0,300000.0,18000000,null,"Все лоты","четверо детей"],["Бестселлер","Семейная ипотека","Семейная ипотека (Сбер)",0.04,0.02,"–",5.0,30.0,0.201,1.0,300000.0,18000000,null,"Все лоты","пятеро и больше"],["Бестселлер","Семейная ипотека","Субсид. семейная ипотека на весь срок (Совком)",0.086,0.086,"-",21.0,30.0,0.201,1.0,300000.0,12000000,0.155,"Все лоты","один ребёнок"],["Бестселлер","Семейная ипотека","Субсид. семейная ипотека на весь срок (Совком)",0.066,0.066,"-",21.0,30.0,0.201,1.0,300000.0,15000000,0.165,"Все лоты","двое детей"],["Бестселлер","Семейная ипотека","Субсид. семейная ипотека на весь срок (Совком)",0.046,0.046,"-",21.0,30.0,0.201,1.0,300000.0,18000000,0.165,"Все лоты","трое детей"],["Бестселлер","Семейная ипотека","Субсид. семейная ипотека на весь срок (Совком)",0.04,0.04,"-",21.0,30.0,0.201,1.0,300000.0,18000000,0.115,"Все лоты","четверо детей"],["Бестселлер","Семейная ипотека","Субсид. семейная ипотека на весь срок (Совком)",0.011,0.011,"-",21.0,30.0,0.201,1.0,300000.0,18000000,0.165,"Все лоты","пятеро и больше"],["Бестселлер","Семейная ипотека","Субсид. семейная ипотека на весь срок (Совком)",0.076,0.076,"-",16.0,20.0,0.201,1.0,300000.0,12000000,0.17,"Все лоты","один ребёнок"],["Бестселлер","Семейная ипотека","Субсид. семейная ипотека на весь срок (Совком)",0.056,0.056,"-",16.0,20.0,0.201,1.0,300000.0,15000000,0.17,"Все лоты","двое детей"],["Бестселлер","Семейная ипотека","Субсид. семейная ипотека на весь срок (Совком)",0.04,0.04,"-",16.0,20.0,0.201,1.0,300000.0,18000000,0.16,"Все лоты","трое детей"],["Бестселлер","Семейная ипотека","Субсид. семейная ипотека на весь срок (Совком)",0.04,0.04,"-",16.0,20.0,0.201,1.0,300000.0,18000000,0.1,"Все лоты","четверо детей"],["Бестселлер","Семейная ипотека","Субсид. семейная ипотека на весь срок (Совком)",0.0045,0.0045,"-",16.0,20.0,0.201,1.0,300000.0,18000000,0.17,"Все лоты","пятеро и больше"],["Бестселлер","Ипотека для всех","Ипотека для всех на срок строительства (Совком)",0.044,0.1849,"1,3",5.0,30.0,0.201,1.0,300000.0,100000000,null,"Все лоты","-"],["Бестселлер","Ипотека для всех","Субсид. ипотека для всех на весь срок (Совком)",0.1499,0.1499,"-",21.0,30.0,0.201,0.299999999999999,300000.0,7999999.0,0.105,"Все лоты","-"],["Бестселлер","Ипотека для всех","Субсид. ипотека для всех на весь срок (Совком)",0.1399,0.1399,"-",21.0,30.0,0.201,0.299999999999999,300000.0,7999999.0,0.135,"Все лоты","-"],["Бестселлер","Ипотека для всех","Субсид. ипотека для всех на весь срок (Совком)",0.1449,0.1449,"-",21.0,30.0,0.3,0.499999999999999,300000.0,7999999.0,0.105,"Все лоты","-"],["Бестселлер","Ипотека для всех","Субсид. ипотека для всех на весь срок (Совком)",0.1249,0.1249,"-",21.0,30.0,0.3,0.499999999999999,300000.0,7999999.0,0.16,"Все лоты","-"],["Бестселлер","Ипотека для всех","Субсид. ипотека для всех на весь срок (Совком)",0.1399,0.1399,"-",21.0,30.0,0.5,1.0,300000.0,7999999.0,0.105,"Все лоты","-"],["Бестселлер","Ипотека для всех","Субсид. ипотека для всех на весь срок (Совком)",0.1249,0.1249,"-",21.0,30.0,0.5,1.0,300000.0,7999999.0,0.145,"Все лоты","-"],["Бестселлер","Ипотека для всех","Субсид. ипотека для всех на весь срок (Совком)",0.1449,0.1449,"-",21.0,30.0,0.201,0.299999999999999,8000000.0,100000000,0.105,"Все лоты","-"],["Бестселлер","Ипотека для всех","Субсид. ипотека для всех на весь срок (Совком)",0.1349,0.1349,"-",21.0,30.0,0.201,0.299999999999999,8000000.0,100000000,0.135,"Все лоты","-"],["Бестселлер","Ипотека для всех","Субсид. ипотека для всех на весь срок (Совком)",0.1399,0.1399,"-",21.0,30.0,0.3,0.499999999999999,8000000.0,100000000,0.105,"Все лоты","-"],["Бестселлер","Ипотека для всех","Субсид. ипотека для всех на весь срок (Совком)",0.1249,0.1249,"-",21.0,30.0,0.3,0.499999999999999,8000000.0,100000000,0.145,"Все лоты","-"],["Бестселлер","Ипотека для всех","Субсид. ипотека для всех на весь срок (Совком)",0.1349,0.1349,"-",21.0,30.0,0.5,1.0,8000000.0,100000000,0.105,"Все лоты","-"],["Бестселлер","Ипотека для всех","Субсид. ипотека для всех на весь срок (Совком)",0.1249,0.1249,"-",21.0,30.0,0.5,1.0,8000000.0,100000000,0.135,"Все лоты","-"],["Бестселлер","Ипотека для всех","Субсид. ипотека для всех на весь срок (Совком)",0.1249,0.1249,"-",5.0,15.0,0.201,0.299999999999999,300000.0,100000000,0.1,"Все лоты","-"],["Бестселлер","Ипотека для всех","Субсид. ипотека для всех на весь срок (Совком)",0.1249,0.1249,"-",5.0,15.0,0.3,0.499999999999999,300000.0,100000000,0.1,"Все лоты","-"],["Бестселлер","Ипотека для всех","Субсид. ипотека для всех на весь срок (Совком)",0.1249,0.1249,"-",5.0,15.0,0.5,1.0,300000.0,100000000,0.1,"Все лоты","-"],["Бестселлер","Ипотека для всех","Субсид. ипотека для всех на весь срок (Совком)",0.1249,0.1249,"-",16.0,20.0,0.3,0.499999999999999,300000.0,100000000,0.145,"Все лоты","-"],["Бестселлер","Ипотека для всех","Субсид. ипотека для всех на весь срок (Совком)",0.1249,0.1249,"-",16.0,20.0,0.5,1.0,300000.0,100000000,0.145,"Все лоты","-"],["Бестселлер","Ипотека для всех","Стандартная ипотека (ВТБ)",0.194,0.194,"-",5.0,30.0,0.201,0.500999999999999,300000.0,100000000,null,"Все лоты","-"],["Бестселлер","Ипотека для всех","Стандартная ипотека (ВТБ)",0.184,0.184,"-",5.0,30.0,0.501,1.0,300000.0,100000000,null,"Все лоты","-"],["Бестселлер","Ипотека для всех","Субсид. ипотека для всех на весь срок (ВТБ)",0.144,0.144,"-",5.0,30.0,0.201,1.0,300000.0,100000000,0.1182,"Все лоты","-"],["Бестселлер","Ипотека для всех","Субсид. ипотека для всех на весь срок (ВТБ)",0.124,0.124,"-",5.0,30.0,0.201,1.0,300000.0,100000000,0.1787,"Все лоты","-"],["Бестселлер","Семейная ипотека","Субсид. семейная ипотека на весь срок (ВТБ)",0.1,0.1,"-",5.0,30.0,0.201,1.0,300000.0,12000000,0.118,"Все лоты","один ребёнок"],["Бестселлер","Семейная ипотека","Субсид. семейная ипотека на весь срок (ВТБ)",0.072,0.072,"-",5.0,30.0,0.201,1.0,300000.0,12000000,0.2502,"Все лоты","один ребёнок"],["Бестселлер","Семейная ипотека","Субсид. семейная ипотека на весь срок (ВТБ)",0.08,0.08,"-",5.0,30.0,0.201,1.0,300000.0,15000000,0.1261,"Все лоты","двое детей"],["Бестселлер","Семейная ипотека","Субсид. семейная ипотека на весь срок (ВТБ)",0.06,0.06,"-",5.0,30.0,0.201,1.0,300000.0,15000000,0.2241,"Все лоты","двое детей"],["Бестселлер","Семейная ипотека","Субсид. семейная ипотека на весь срок (ВТБ)",0.06,0.06,"-",5.0,30.0,0.201,1.0,300000.0,18000000,0.1345,"Все лоты","трое детей"],["Бестселлер","Семейная ипотека","Субсид. семейная ипотека на весь срок (ВТБ)",0.055,0.055,"-",5.0,30.0,0.201,1.0,300000.0,18000000,0.0682,"Все лоты","четверо детей"],["Бестселлер","Семейная ипотека","Субсид. семейная ипотека на весь срок (ВТБ)",0.035,0.035,"-",5.0,30.0,0.201,1.0,300000.0,18000000,0.0719,"Все лоты","пятеро и больше"],["Бестселлер","Семейная ипотека","Субсид. семейная ипотека на весь срок (ДОМ.РФ)",0.1,0.1,"-",5.0,30.0,0.201,1.0,300000.0,12000000,0.0899,"Все лоты","один ребёнок"],["Бестселлер","Семейная ипотека","Субсид. семейная ипотека на весь срок (ДОМ.РФ)",0.09,0.09,"-",5.0,30.0,0.201,1.0,300000.0,12000000,0.1318,"Все лоты","один ребёнок"],["Бестселлер","Семейная ипотека","Субсид. семейная ипотека на весь срок (ДОМ.РФ)",0.08,0.08,"-",5.0,30.0,0.201,1.0,300000.0,15000000,0.0899,"Все лоты","двое детей"],["Бестселлер","Семейная ипотека","Субсид. семейная ипотека на весь срок (ДОМ.РФ)",0.07,0.07,"-",5.0,30.0,0.201,1.0,300000.0,15000000,0.1318,"Все лоты","двое детей"],["Бестселлер","Семейная ипотека","Субсид. семейная ипотека на весь срок (ДОМ.РФ)",0.06,0.06,"-",5.0,30.0,0.201,1.0,300000.0,18000000,0.1172,"Все лоты","трое детей"],["Бестселлер","Семейная ипотека","Субсид. семейная ипотека на весь срок (ДОМ.РФ)",0.05,0.05,"-",5.0,30.0,0.201,1.0,300000.0,18000000,0.1812,"Все лоты","трое детей"],["Бестселлер","Семейная ипотека","Субсид. семейная ипотека на весь срок (ДОМ.РФ)",0.04,0.04,"-",5.0,30.0,0.201,1.0,300000.0,18000000,0.1172,"Все лоты","четверо детей"],["Бестселлер","Семейная ипотека","Субсид. семейная ипотека на весь срок (ДОМ.РФ)",0.02,0.02,"-",5.0,30.0,0.201,1.0,300000.0,18000000,0.2571,"Все лоты","пятеро и больше"],["Бестселлер","Ипотека для всех","Стандартная ипотека (МКБ)",0.179,0.179,"-",5.0,30.0,0.201,1.0,300000.0,30000000,null,"Все лоты","-"],["Бестселлер","Ипотека для всех","Субсид. ипотека для всех на весь срок (МКБ)",0.119,0.119,"-",5.0,15.0,0.201,1.0,300000.0,30000000,0.155,"Все лоты","-"],["Бестселлер","Ипотека для всех","Субсид. ипотека для всех на весь срок (МКБ)",0.155,0.155,"-",5.0,30.0,0.201,1.0,300000.0,30000000,0.085,"Все лоты","-"],["Бестселлер","Ипотека для всех","Субсид. ипотека для всех на весь срок (МКБ)",0.145,0.145,"-",5.0,30.0,0.201,1.0,300000.0,30000000,0.12,"Все лоты","-"],["Бестселлер","Ипотека для всех","Субсид. ипотека для всех на весь срок (МКБ)",0.1299,0.1299,"-",5.0,30.0,0.201,1.0,300000.0,30000000,0.19,"Все лоты","-"],["Бестселлер","Ипотека для всех","Субсид. ипотека для всех на весь срок (МКБ)",0.1239,0.1239,"-",5.0,15.0,0.201,1.0,300000.0,30000000,0.139,"Все лоты","-"],["Бестселлер","Ипотека для всех","Субсид. ипотека для всех на весь срок (МКБ)",0.16,0.16,"-",5.0,30.0,0.201,1.0,300000.0,30000000,0.075,"Все лоты","-"],["Бестселлер","Ипотека для всех","Стандартная ипотека (АТБ)",0.1744,0.1744,"-",5.0,30.0,0.201,1.0,300000.0,30000000,null,"Все лоты","-"],["Бестселлер","Ипотека для всех","Стандартная ипотека (ПСБ)",0.1799,0.1799,"-",5.0,30.0,0.201,1.0,300000.0,25000000,null,"Все лоты","-"],["Бестселлер","Ипотека для всех","Стандартная ипотека (Металлинвест)",0.175,0.175,"-",5.0,30.0,0.201,1.0,300000.0,25000000,null,"Все лоты","-"],["Бестселлер","Ипотека для всех","Субсид. ипотека для всех на весь срок (Металлинвест)",0.127,0.127,"-",5.0,30.0,0.201,1.0,300000.0,15000000,0.142,"Все лоты","-"],["Бестселлер","Ипотека для всех","Субсид. ипотека для всех на весь срок (Металлинвест)",0.099,0.099,"-",5.0,30.0,0.201,1.0,300000.0,15000000,0.259,"Все лоты","-"],["Бестселлер","Ипотека для всех","Субсид. ипотека для всех на весь срок (ДОМ.РФ)",0.145,0.145,"-",5.0,30.0,0.201,1.0,300000.0,50000000,0.0759,"Все лоты","-"],["Бестселлер","Ипотека для всех","Субсид. ипотека для всех на весь срок (ДОМ.РФ)",0.128,0.128,"-",5.0,30.0,0.201,1.0,300000.0,50000000,0.126,"Все лоты","-"],["Бестселлер","Ипотека для всех","Субсид. ипотека для всех на весь срок (Альфа)",0.1259,0.1259,"-",3.0,10.0,0.201,1.0,600000.0,30000000,0.0912,"Все лоты","-"],["Бестселлер","Ипотека для всех","Субсид. ипотека для всех на весь срок (Альфа)",0.1259,0.1259,"-",11.0,15.0,0.201,1.0,600000.0,30000000,0.1254,"Все лоты","-"],["Бестселлер","Ипотека для всех","Субсид. ипотека для всех на весь срок (Альфа)",0.1259,0.1259,"-",16.0,20.0,0.201,1.0,600000.0,30000000,0.1534,"Все лоты","-"],["Бестселлер","Семейная ипотека","Субсид. семейная ипотека на весь срок (Альфа)",0.109,0.109,"-",5.0,30.0,0.201,1.0,600000.0,12000000,0.0737,"Все лоты","один ребёнок"],["Бестселлер","Семейная ипотека","Субсид. семейная ипотека на весь срок (Альфа)",0.09,0.09,"-",5.0,30.0,0.201,1.0,600000.0,15000000,0.0808,"Все лоты","двое детей"],["Бестселлер","Семейная ипотека","Субсид. семейная ипотека на весь срок (Альфа)",0.07,0.07,"-",5.0,30.0,0.201,1.0,600000.0,18000000,0.0905,"Все лоты","трое детей"],["Бестселлер","Семейная ипотека","Субсид. семейная ипотека на весь срок (Альфа)",0.055,0.055,"-",5.0,30.0,0.201,1.0,600000.0,18000000,0.07,"Все лоты","четверо детей"],["Бестселлер","Семейная ипотека","Субсид. семейная ипотека на весь срок (Альфа)",0.035,0.035,"-",5.0,30.0,0.201,1.0,600000.0,18000000,0.072,"Все лоты","пятеро и больше"],["Бестселлер","Семейная ипотека","Cемейная ипотека (Абсолют)",0.1175,0.1175,"-",5.0,15.0,0.201,1.0,300000.0,12000000,null,"Все лоты","один ребёнок"],["Бестселлер","Семейная ипотека","Cемейная ипотека (Абсолют)",0.0975,0.0975,"-",5.0,15.0,0.201,1.0,300000.0,15000000,null,"Все лоты","двое детей"],["Бестселлер","Семейная ипотека","Cемейная ипотека (Абсолют)",0.0775,0.0775,"-",5.0,15.0,0.201,1.0,300000.0,18000000,null,"Все лоты","трое детей"],["Бестселлер","Семейная ипотека","Cемейная ипотека (Абсолют)",0.0575,0.0575,"-",5.0,15.0,0.201,1.0,300000.0,18000000,null,"Все лоты","четверо детей"],["Бестселлер","Семейная ипотека","Cемейная ипотека (Абсолют)",0.0375,0.0375,"-",5.0,15.0,0.201,1.0,300000.0,18000000,null,"Все лоты","пятеро и больше"],["Бестселлер","Семейная ипотека","Cемейная ипотека 6%",0.06,0.1,"15",5.0,30.0,0.5,1.0,300000.0,12000000,null,"Все лоты","один ребёнок"],["Бестселлер","Семейная ипотека","Cемейная ипотека 6%",0.06,0.1,"15",5.0,30.0,0.5,1.0,300000.0,15000000,null,"Все лоты","двое детей"],["Бестселлер","Семейная ипотека","Cемейная ипотека (ВТБ)",0.12,0.16,"15",5.0,30.0,0.4,1.0,300000.0,12000000,null,"Все лоты","один ребёнок"],["Бестселлер","Семейная ипотека","Cемейная ипотека (ВТБ)",0.1,0.14,"15",5.0,30.0,0.4,1.0,300000.0,15000000,null,"Все лоты","двое детей"],["Бестселлер","Семейная ипотека","Cемейная ипотека (ВТБ)",0.08,0.12,"15",5.0,30.0,0.4,1.0,300000.0,18000000,null,"Все лоты","трое детей"],["Бестселлер","Семейная ипотека","Cемейная ипотека (ВТБ)",0.06,0.1,"15",5.0,30.0,0.4,1.0,300000.0,18000000,null,"Все лоты","четверо детей"],["Бестселлер","Семейная ипотека","Cемейная ипотека (ВТБ)",0.04,0.08,"15",5.0,30.0,0.4,1.0,300000.0,18000000,null,"Все лоты","пятеро и больше"],["Бестселлер","Семейная ипотека","Cемейная ипотека (Альфа)",0.12,0.12,"-",5.0,15.0,0.201,1.0,300000.0,12000000,null,"Все лоты","один ребёнок"],["Бестселлер","Семейная ипотека","Cемейная ипотека (Альфа)",0.1,0.1,"-",5.0,15.0,0.201,1.0,300000.0,15000000,null,"Все лоты","двое детей"],["Бестселлер","Семейная ипотека","Cемейная ипотека (Альфа)",0.08,0.08,"-",5.0,15.0,0.201,1.0,300000.0,18000000,null,"Все лоты","трое детей"],["Бестселлер","Семейная ипотека","Cемейная ипотека (Альфа)",0.06,0.06,"-",5.0,15.0,0.201,1.0,300000.0,18000000,null,"Все лоты","четверо детей"],["Бестселлер","Семейная ипотека","Cемейная ипотека (Альфа)",0.04,0.04,"-",5.0,15.0,0.201,1.0,300000.0,18000000,null,"Все лоты","пятеро и больше"],["Бестселлер","Семейная ипотека","Cемейная ипотека (МКБ)",0.12,0.12,"-",5.0,15.0,0.201,1.0,300000.0,12000000,null,"Все лоты","один ребёнок"],["Бестселлер","Семейная ипотека","Cемейная ипотека (МКБ)",0.1,0.1,"-",5.0,15.0,0.201,1.0,300000.0,15000000,null,"Все лоты","двое детей"],["Бестселлер","Семейная ипотека","Cемейная ипотека (МКБ)",0.08,0.08,"-",5.0,15.0,0.201,1.0,300000.0,18000000,null,"Все лоты","трое детей"],["Бестселлер","Семейная ипотека","Cемейная ипотека (МКБ)",0.06,0.06,"-",5.0,15.0,0.201,1.0,300000.0,18000000,null,"Все лоты","четверо детей"],["Бестселлер","Семейная ипотека","Cемейная ипотека (МКБ)",0.04,0.04,"-",5.0,15.0,0.201,1.0,300000.0,18000000,null,"Все лоты","пятеро и больше"],["Бестселлер","Семейная ипотека","Cемейная ипотека (ДОМ.РФ)",0.12,0.16,"15",5.0,30.0,0.201,1.0,300000.0,12000000,null,"Все лоты","один ребёнок"],["Бестселлер","Семейная ипотека","Cемейная ипотека (ДОМ.РФ)",0.1,0.14,"15",5.0,30.0,0.201,1.0,300000.0,15000000,null,"Все лоты","двое детей"],["Бестселлер","Семейная ипотека","Cемейная ипотека (ДОМ.РФ)",0.08,0.12,"15",5.0,30.0,0.201,1.0,300000.0,18000000,null,"Все лоты","трое детей"],["Бестселлер","Семейная ипотека","Cемейная ипотека (ДОМ.РФ)",0.06,0.1,"15",5.0,30.0,0.201,1.0,300000.0,18000000,null,"Все лоты","четверо детей"],["Бестселлер","Семейная ипотека","Cемейная ипотека (ДОМ.РФ)",0.04,0.08,"15",5.0,30.0,0.201,1.0,300000.0,18000000,null,"Все лоты","пятеро и больше"]],"combo":[["Бестселлер","Комбо-ипотека","Комбо-ипотека (Уралсиб)",0.12,0.226,"-",5.0,15.0,0.2001,1.0,12000000,12500000,30000000,"–","Все лоты","один ребёнок"],["Бестселлер","Комбо-ипотека","Комбо-ипотека (Уралсиб)",0.1,0.226,"-",5.0,15.0,0.2001,1.0,15000000,15500000,30000000,"–","Все лоты","двое детей"],["Бестселлер","Комбо-ипотека","Комбо-ипотека (Уралсиб)",0.08,0.226,"-",5.0,15.0,0.2001,1.0,18000000,18500000,30000000,"–","Все лоты","трое детей"],["Бестселлер","Комбо-ипотека","Комбо-ипотека (Уралсиб)",0.06,0.226,"-",5.0,15.0,0.2001,1.0,18000000,18500000,30000000,"–","Все лоты","четверо детей"],["Бестселлер","Комбо-ипотека","Комбо-ипотека (Уралсиб)",0.04,0.226,"-",5.0,15.0,0.2001,1.0,18000000,18500000,30000000,"–","Все лоты","пятеро и больше"],["Бестселлер","Комбо-ипотека","Комбо-ипотека (Совком)",0.1199,0.24,"-",5.0,30.0,0.2001,0.5,12000000,12500000,30000000,"–","Все лоты","один ребёнок"],["Бестселлер","Комбо-ипотека","Комбо-ипотека (Совком)",0.0999,0.24,"-",5.0,30.0,0.2001,0.5,15000000,15500000,30000000,"–","Все лоты","двое детей"],["Бестселлер","Комбо-ипотека","Комбо-ипотека (Совком)",0.0799,0.24,"-",5.0,30.0,0.2001,0.5,18000000,18500000,30000000,"–","Все лоты","трое детей"],["Бестселлер","Комбо-ипотека","Комбо-ипотека (Совком)",0.0599,0.24,"-",5.0,30.0,0.2001,0.5,18000000,18500000,30000000,"–","Все лоты","четверо детей"],["Бестселлер","Комбо-ипотека","Комбо-ипотека (Совком)",0.0399,0.24,"-",5.0,30.0,0.2001,0.5,18000000,18500000,30000000,"–","Все лоты","пятеро и больше"],["Бестселлер","Комбо-ипотека","Комбо-ипотека субсидированная (Совком)",0.1199,0.1199,"-",20.0,30.0,0.2001,1.0,12000000,14000000,14999999,"44%","Все лоты","один ребёнок"],["Бестселлер","Комбо-ипотека","Комбо-ипотека субсидированная (Совком)",0.1199,0.1199,"-",20.0,30.0,0.2001,1.0,12000000,15000000,30000000,"35,00%","Все лоты","один ребёнок"],["Бестселлер","Комбо-ипотека","Комбо-ипотека субсидированная (Совком)",0.0999,0.0999,"-",20.0,30.0,0.2001,1.0,15000000,17000000,17999999,"58,00%","Все лоты","двое детей"],["Бестселлер","Комбо-ипотека","Комбо-ипотека субсидированная (Совком)",0.0999,0.0999,"-",20.0,30.0,0.2001,1.0,15000000,18000000,30000000,"47%","Все лоты","двое детей"],["Бестселлер","Комбо-ипотека","Комбо-ипотека субсидированная (Совком)",0.0799,0.0799,"-",20.0,30.0,0.2001,1.0,18000000,20000000,20999999,"85,00%","Все лоты","трое детей"],["Бестселлер","Комбо-ипотека","Комбо-ипотека субсидированная (Совком)",0.0799,0.0799,"-",20.0,30.0,0.2001,1.0,18000000,21000000,30000000,"70%","Все лоты","трое детей"],["Бестселлер","Комбо-ипотека","Комбо-ипотека субсидированная (Совком)",0.0599,0.0599,"-",20.0,30.0,0.2001,1.0,18000000,20000000,20999999,"95%","Все лоты","четверо детей"],["Бестселлер","Комбо-ипотека","Комбо-ипотека субсидированная (Совком)",0.0599,0.0599,"-",20.0,30.0,0.2001,1.0,18000000,21000000,30000000,"79,00%","Все лоты","четверо детей"],["Бестселлер","Комбо-ипотека","Комбо-ипотека субсидированная (Совком)",0.0399,0.0399,"-",20.0,30.0,0.2001,1.0,18000000,20000000,20999999,"105%","Все лоты","пятеро и больше"],["Бестселлер","Комбо-ипотека","Комбо-ипотека субсидированная (Совком)",0.0399,0.0399,"-",20.0,30.0,0.2001,1.0,18000000,21000000,30000000,"88,00%","Все лоты","пятеро и больше"],["Бестселлер","Комбо-ипотека","Комбо-ипотека (ВТБ)",0.12,0.204,"-",5.0,30.0,0.2001,1.0,12000000,12500000,30000000,"–","Все лоты","один ребёнок"],["Бестселлер","Комбо-ипотека","Комбо-ипотека (ВТБ)",0.1,0.204,"-",5.0,30.0,0.2001,1.0,15000000,15500000,30000000,"–","Все лоты","двое детей"],["Бестселлер","Комбо-ипотека","Комбо-ипотека (ВТБ)",0.08,0.204,"-",5.0,30.0,0.2001,1.0,18000000,18500000,30000000,"–","Все лоты","трое детей"],["Бестселлер","Комбо-ипотека","Комбо-ипотека (ВТБ)",0.06,0.204,"-",5.0,30.0,0.2001,1.0,18000000,18500000,30000000,"–","Все лоты","четверо детей"],["Бестселлер","Комбо-ипотека","Комбо-ипотека (ВТБ)",0.04,0.204,"-",5.0,30.0,0.2001,1.0,18000000,18500000,30000000,"–","Все лоты","пятеро и больше"]],"tranche":[["Бестселлер","Траншевая ипотека","Траншевая ипотека с мин. траншем 100 тыс. руб. (Сбер)",0.192,0.192,0.01,0.7889999999999999,0.03,"-",5.0,30.0,0.201,1.0,300000.0,50000000,"–","Все лоты","-","Первый транш - при заключении ДДУ.\nВторой транш - до 30.09.2027.",1.0,"Бестселлер|Траншевая ипотека|1"]]};
+  var SNAPDATE = '19.11.2026';
+
+  var FAMILY = 'Семейная ипотека';
+  var COMBO = 'Комбо-ипотека';
+  var TRANCHE = 'Траншевая ипотека';
+  // Типы, где программа зависит от количества детей
+  function needKids(type) { return type === FAMILY || type === COMBO; }
+  var OK = 'Применяется';
+
+  /* ================== ДАННЫЕ ================== */
+  // Число из ячейки: число как есть; текст «15», «20,1%», «300 000» — разбирается; «–», «-», пусто — null
+  function numx(v) {
+    if (typeof v === 'number') return isFinite(v) ? v : null;
+    if (typeof v !== 'string') return null;
+    var s = v.replace(/[\s  ]/g, '').replace(',', '.'), isPct = s.indexOf('%') >= 0;
+    s = s.replace('%', '');
+    if (!/^-?\d+(\.\d+)?$/.test(s)) return null;
+    return isPct ? parseFloat(s) / 100 : parseFloat(s);
+  }
+  var KIDS_ORDER = ['один ребёнок', 'двое детей', 'трое детей', 'четверо детей', 'пятеро и больше'];
+  // Латинские буквы, похожие на русские, внутри русских слов («Cемейная» с латинской C) — заменяем на русские,
+  // иначе сортировка по алфавиту ставит такие программы не на своё место
+  var HOMO = { A: 'А', B: 'В', C: 'С', E: 'Е', H: 'Н', K: 'К', M: 'М', O: 'О', P: 'Р', T: 'Т', X: 'Х', a: 'а', c: 'с', e: 'е', o: 'о', p: 'р', x: 'х', y: 'у' };
+  function fixHomoglyphs(s) {
+    return s.replace(/[ABCEHKMOPTXaceopxy]/g, function (ch, i) {
+      var prev = s.charAt(i - 1), next = s.charAt(i + 1);
+      return /[а-яё]/i.test(prev) || /[а-яё]/i.test(next) ? HOMO[ch] : ch;
+    });
+  }
+  var collator = typeof Intl !== 'undefined' && Intl.Collator ? new Intl.Collator('ru', { sensitivity: 'base', numeric: true }) : null;
+  // По названию; одинаковые названия — сначала с меньшим ежемесячным платежом
+  function bankOf(name) {
+    var m = /\s*\(([^()]+)\)\s*$/.exec(name);
+    return m ? { bank: m[1].trim(), prog: name.slice(0, m.index).trim() } : { bank: '', prog: name };
+  }
+  function byName(a, b) { return (collator ? collator.compare(a.name, b.name) : (a.name < b.name ? -1 : a.name > b.name ? 1 : 0)) || (a.p1 || 0) - (b.p1 || 0) || a.n - b.n; }
+
+  /* Лист «Программы», колонки A–O:
+     A проекты (через запятую) · B тип · C программа · D ставка льготная · E ставка основная · F льготный период, лет ·
+     G мин. срок · H макс. срок · I мин. ПВ · J макс. ПВ · K мин. кредит · L лимит кредита · M субсидия · N ограничения · O дети */
+  function normalize(raw) {
+    var programs = (raw.programs || []).filter(function (r) { return r && r[1] && r[2]; }).map(function (r) {
+      var kids = r[14] == null ? '' : String(r[14]).trim();
+      var r1 = numx(r[3]) || 0, r2 = numx(r[4]);
+      return {
+        projects: String(r[0] || '').split(',').map(function (s) { return s.trim(); }).filter(Boolean),
+        type: String(r[1]).trim(), name: fixHomoglyphs(String(r[2]).trim().replace(/\s{2,}/g, ' ')),
+        r1: r1, r2: r2 == null ? r1 : r2, grace: numx(r[5]) || 0,
+        minTerm: numx(r[6]) || 0, term: numx(r[7]) || 30,
+        mpv: numx(r[8]) || 0, maxPv: numx(r[9]) == null ? 1 : numx(r[9]),
+        minLoan: numx(r[10]) || 0, lim: numx(r[11]) == null ? Infinity : numx(r[11]),
+        sub: numx(r[12]) || 0, restr: numx(r[13]),
+        kids: /^[-–—]?$/.test(kids) ? null : kids
+      };
+    });
+    /* Лист «Комбо_Мск», колонки A–P: A проекты · B тип · C программа · D ставка (семейная) · E ставка (базовая) ·
+       F льготный период (не используется) · G мин. срок · H макс. срок · I мин. ПВ · J макс. ПВ ·
+       K макс. кредит по семейной части · L мин. кредит (суммарно) · M лимит кредита (суммарно) ·
+       N субсидия застройщика, % от базовой части кредита · O ограничения · P дети.
+       Кредит до K — по семейной ставке, остаток — по базовой. */
+    (raw.combo || []).filter(function (r) { return r && r[1] && r[2]; }).forEach(function (r) {
+      var kids = r[15] == null ? '' : String(r[15]).trim();
+      var rf = numx(r[3]) || 0, rb = numx(r[4]);
+      programs.push({
+        combo: true,
+        projects: String(r[0] || '').split(',').map(function (s) { return s.trim(); }).filter(Boolean),
+        type: String(r[1]).trim(), name: fixHomoglyphs(String(r[2]).trim().replace(/\s{2,}/g, ' ')),
+        rFam: rf, rBase: rb == null ? rf : rb, r1: rf, r2: rf, grace: 0,
+        minTerm: numx(r[6]) || 0, term: numx(r[7]) || 30,
+        mpv: numx(r[8]) || 0, maxPv: numx(r[9]) == null ? 1 : numx(r[9]),
+        famLim: numx(r[10]) == null ? Infinity : numx(r[10]),
+        minLoan: numx(r[11]) || 0, lim: numx(r[12]) == null ? Infinity : numx(r[12]),
+        sub: numx(r[13]) || 0, restr: numx(r[14]),
+        kids: /^[-–—]?$/.test(kids) ? null : kids
+      });
+    });
+    /* Лист «Траншевая_Мск», колонки A–U: A проекты · B тип · C программа · D ставка льготная · E ставка основная ·
+       F первый транш, % · G второй транш, % · H скидка, % · I льготный период · J мин. срок · K макс. срок · L мин. ПВ ·
+       M макс. ПВ · N мин. кредит · O лимит · P субсидия · Q ограничения · R дети · S даты выдачи траншей (текст).
+       Первый транш — в день ДДУ (сегодня), второй — дата из S («до 30.06.2027»).
+       «…с мин. траншем 100 тыс. руб.» в названии — первый транш = меньшее из (F × цена) и 100 000 ₽. */
+    (raw.tranche || []).filter(function (r) { return r && r[1] && r[2]; }).forEach(function (r) {
+      var kids = r[17] == null ? '' : String(r[17]).trim();
+      var name = fixHomoglyphs(String(r[2]).trim().replace(/\s{2,}/g, ' '));
+      var dates = String(r[18] || '').match(/\d{1,2}\.\d{1,2}\.\d{4}/g);
+      var d2 = dates ? dates[dates.length - 1].split('.') : String(CONFIG.trancheDate2).split('-').reverse();
+      var minFirst = /мин\.?\s*транш\D{0,10}(\d[\d\s]*)\s*тыс/i.exec(name);
+      var r1 = numx(r[3]) || 0, r2 = numx(r[4]);
+      programs.push({
+        tranche: true,
+        projects: String(r[0] || '').split(',').map(function (s) { return s.trim(); }).filter(Boolean),
+        type: String(r[1]).trim(), name: name,
+        r1: r1, r2: r2 == null ? r1 : r2, grace: numx(r[8]) || 0,
+        t1Share: numx(r[5]) || 0, t1Min: minFirst ? parseInt(minFirst[1].replace(/\s/g, ''), 10) * 1000 : null,
+        date2: new Date(+d2[2], +d2[1] - 1, +d2[0]), disc: numx(r[7]) || 0,
+        minTerm: numx(r[9]) || 0, term: numx(r[10]) || 30,
+        mpv: numx(r[11]) || 0, maxPv: numx(r[12]) == null ? 1 : numx(r[12]),
+        minLoan: numx(r[13]) || 0, lim: numx(r[14]) == null ? Infinity : numx(r[14]),
+        sub: numx(r[15]) || 0, restr: numx(r[16]),
+        kids: /^[-–—]?$/.test(kids) ? null : kids
+      });
+    });
+    programs = splitPvSaving(programs);
+    var withPrograms = {};
+    programs.forEach(function (p) { p.projects.forEach(function (x) { withPrograms[x] = true; }); });
+    var projects = (raw.projects || []).map(function (p) { return String(p).trim(); }).filter(function (p) { return withPrograms[p]; });
+    Object.keys(withPrograms).forEach(function (x) { if (projects.indexOf(x) < 0) projects.push(x); });
+    var kidsList = [];
+    programs.forEach(function (p) { if ((p.type === FAMILY || p.combo) && p.kids && kidsList.indexOf(p.kids) < 0) kidsList.push(p.kids); });
+    kidsList.sort(function (a, b) {
+      var ia = KIDS_ORDER.indexOf(a), ib = KIDS_ORDER.indexOf(b);
+      return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib);
+    });
+    // Типы — в порядке «Справочников», но только те, по которым на листе есть программы
+    var withType = {};
+    programs.forEach(function (p) { withType[p.type] = true; });
+    var types = (raw.types && raw.types.length ? raw.types : ['Семейная ипотека', 'IT ипотека', 'Ипотека для всех'])
+      .map(function (t) { return String(t).trim(); }).filter(function (t) { return withType[t]; });
+    Object.keys(withType).forEach(function (t) { if (types.indexOf(t) < 0) types.push(t); });
+    return {
+      programs: programs, projects: projects, types: types, kidsList: kidsList.length ? kidsList : KIDS_ORDER.slice(),
+      tolerance: typeof raw.tolerance === 'number' ? raw.tolerance : 0.002,
+      threshold: typeof raw.threshold === 'number' ? raw.threshold : 0.01
+    };
+  }
+
+  function gviz(sheet, range, signal) {
+    var url = 'https://docs.google.com/spreadsheets/d/' + CONFIG.sheetId + '/gviz/tq?tqx=out:json&headers=0&sheet=' +
+      encodeURIComponent(sheet) + '&range=' + range;
+    return fetch(url, { cache: 'no-store', signal: signal }).then(function (r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.text();
+    }).then(function (t) {
+      var j = JSON.parse(t.slice(t.indexOf('{'), t.lastIndexOf('}') + 1));
+      if (j.status !== 'ok') throw new Error('gviz ' + j.status);
+      return j.table.rows.map(function (row) { return (row.c || []).map(function (c) { return c ? c.v : null; }); });
+    });
+  }
+
+  function loadLive() {
+    var ctrl = typeof AbortController !== 'undefined' ? new AbortController() : null;
+    var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, 10000);
+    var s = ctrl ? ctrl.signal : undefined;
+    return Promise.all([
+      gviz(CONFIG.programsSheet, 'A5:O400', s),
+      gviz('Справочники', 'A4:F44', s),
+      // Лист комбо не обязателен: если не загрузился — берём комбо из встроенной копии
+      CONFIG.comboSheet ? gviz(CONFIG.comboSheet, 'A5:P400', s).catch(function () { return null; }) : null,
+      CONFIG.trancheSheet ? gviz(CONFIG.trancheSheet, 'A5:U400', s).catch(function () { return null; }) : null
+    ]).then(function (res) {
+      clearTimeout(timer);
+      var lst = res[1];
+      var col = function (i) { return lst.map(function (r) { return r[i]; }).filter(function (v) { return v !== null && v !== ''; }); };
+      var d = normalize({
+        programs: res[0], combo: res[2] || SNAPSHOT.combo, tranche: res[3] || SNAPSHOT.tranche, projects: col(0), types: col(1),
+        tolerance: lst[0] && lst[0][5], threshold: lst[2] && lst[2][5]
+      });
+      if (!d.programs.length) throw new Error('пустые данные');
+      return d;
+    });
+  }
+
+  /* ================== РАСЧЁТ (повторяет формулы листа «Калькулятор») ================== */
+  function p15(x) { return +x.toPrecision(15); }
+  function round0(x) { return x < 0 ? -Math.round(p15(-x)) : Math.round(p15(x)); }
+  // Правило повышения ставки комбо-ипотеки (CONFIG.comboStepUp) для программы или null
+  // Правило накопления ПВ (CONFIG.pvSaving) для программы и проекта: { minPv, end, n } или null (дата прошла — тоже null)
+  function pvSavingRule(p, project) {
+    var list = CONFIG.pvSaving || [];
+    for (var i = 0; i < list.length; i++) {
+      var R = list[i], end = R.projects && R.projects[project];
+      if (!end || p.name.indexOf(R.name) < 0 || (R.r1 != null && Math.abs(p.r1 - R.r1) > 1e-9)) continue;
+      var today = new Date(); today.setHours(0, 0, 0, 0);
+      var d = new Date(end + 'T00:00:00');
+      var n = (d.getFullYear() - today.getFullYear()) * 12 + d.getMonth() - today.getMonth() - (d.getDate() < today.getDate() ? 1 : 0);
+      return n > 0 ? { minPv: R.minPv, end: d, n: n } : null;
+    }
+    return null;
+  }
+  function comboStepUp(p) {
+    var list = CONFIG.comboStepUp || [];
+    for (var i = 0; i < list.length; i++) if (p.name.indexOf(list[i].name) >= 0) return list[i];
+    return null;
+  }
+  function round6(x) { return round0(x * 1e6) / 1e6; }
+  function roundup0(x) { return x < 0 ? -Math.ceil(p15(-x)) : Math.ceil(p15(x)); }
+  function PMT(r, n, loan) { return r === 0 ? loan / n : loan * r / (1 - Math.pow(1 + r, -n)); }
+  function balance(r, n, pay, loan) { // = FV(r; n; pay; -loan)
+    if (r === 0) return loan - pay * n;
+    var f = Math.pow(1 + r, n);
+    return loan * f - pay * (f - 1) / r;
+  }
+
+  // Своя скидка программы в проекте (CONFIG.programDiscounts): совпадает часть названия (exact — всё название)
+  // и льготная ставка; нет правила — null
+  // Совком 4,4% (CONFIG.pvSavingSplit) в проектах из списка — две программы: «с накоплением на ПВ» (CONFIG.pvSaving)
+  // и «без накопления на ПВ» (расчёт как раньше). В других проектах программа остаётся как в таблице
+  // Целых месяцев от сегодня до даты 'ГГГГ-ММ-ДД' (как у накопления ПВ)
+  function monthsTo(e) {
+    var t = new Date(); t.setHours(0, 0, 0, 0);
+    var d = new Date(e + 'T00:00:00');
+    return (d.getFullYear() - t.getFullYear()) * 12 + d.getMonth() - t.getMonth() - (d.getDate() < t.getDate() ? 1 : 0);
+  }
+  // Дата конца периода строительства проекта — из CONFIG.pvSaving (правило «с накоплением»)
+  function pvSavingEnd(project) {
+    var R = (CONFIG.pvSaving || [])[0];
+    return R && R.projects ? R.projects[project] || null : R && R.end || null;
+  }
+  function splitPvSaving(programs) {
+    var S = CONFIG.pvSavingSplit, out = [];
+    if (!S) return programs;
+    programs.forEach(function (p) {
+      var on = S.projects.filter(function (x) { return p.projects.indexOf(x) >= 0; });
+      if (p.combo || p.tranche || !on.length || p.name !== S.name || (S.r1 != null && Math.abs(p.r1 - S.r1) > 1e-9)) { out.push(p); return; }
+      var rest = p.projects.filter(function (x) { return on.indexOf(x) < 0; });
+      if (rest.length) out.push(Object.assign({}, p, { projects: rest }));
+      out.push(Object.assign({}, p, { projects: on, name: S.save }));
+      // «без накопления»: льготный период — до той же даты, что у «с накоплением» (целые месяцы от сегодня), а не столбец F;
+      // проекты с разными датами — отдельными копиями. Дата прошла — льготный период из таблицы
+      var byEnd = {};
+      on.forEach(function (x) { var e = pvSavingEnd(x) || ''; (byEnd[e] = byEnd[e] || []).push(x); });
+      Object.keys(byEnd).forEach(function (e) {
+        var m = e ? monthsTo(e) : 0;
+        out.push(Object.assign({}, p, { projects: byEnd[e], name: S.no, n: (p.n || 0) + 0.5 }, m > 0 ? { grace: m / 12, graceEnd: new Date(e + 'T00:00:00') } : {}));
+      });
+    });
+    return out;
+  }
+  // Своя скидка программы (CONFIG.programDiscounts) — и для двух новых названий Совкома
+  (function () {
+    var S = CONFIG.pvSavingSplit, list = CONFIG.programDiscounts || [];
+    if (S) list.slice().forEach(function (m) {
+      if (!m.exact && S.name.toLowerCase().indexOf(m.name.toLowerCase()) >= 0)
+        [S.save, S.no].forEach(function (n) { list.push(Object.assign({}, m, { name: n })); });
+    });
+  })();
+  function progDiscount(p, project) {
+    var m = (CONFIG.programDiscounts || []).filter(function (m) {
+      var pn = p.name.toLowerCase(), mn = m.name.toLowerCase();
+      return (m.exact ? pn === mn : pn.indexOf(mn) >= 0) && (m.r1 == null || Math.abs(p.r1 - m.r1) < 1e-9);
+    })[0];
+    return m && m.disc[project] != null ? m.disc[project] : null;
+  }
+
+  function compute(D, inp) {
+    var fam = needKids(inp.type);
+    var base = inp.base, BT = inp.base + inp.finish;
+    var pvIn = inp.pv || 0;
+    // Программы проекта и типа; для семейной и комбо — ещё и по количеству детей (колонка O / P)
+    var list = D.programs.filter(function (p) {
+      return p.projects.indexOf(inp.project) >= 0 && p.type === inp.type && (!fam || p.kids === inp.kids);
+    });
+
+    var rows = list.map(function (p, i) {
+      var r1 = p.r1;
+      var r2 = p.grace === 0 ? r1 : p.r2;
+      // Льготный период учитываем, только если ставка после него другая («на весь срок» — одна ставка)
+      var gn = Math.abs(r2 - r1) < 1e-12 ? 0 : round0(p.grace * 12);
+      // Накопление ПВ (CONFIG.pvSaving): льготная ставка — до даты из правила (целые месяцы), после — основная ставка
+      var ps = p.combo || p.tranche ? null : pvSavingRule(p, inp.project);
+      if (ps) { r2 = p.r2; gn = ps.n; }
+      // Срок: введённый клиентом, но в рамках мин./макс. срока программы (G, H); пусто — максимальный
+      var maxTerm = p.term, minTerm = Math.min(p.minTerm, maxTerm);
+      var term = inp.term != null ? Math.min(Math.max(inp.term, 1, minTerm), maxTerm) : maxTerm;
+      var mpv = p.mpv;
+      var lim = p.lim;
+      var sub = p.sub;
+      // Субсидированная программа — без скидки на квартиру (CONFIG.subsidyNoDiscount)
+      var noDisc = CONFIG.subsidyNoDiscount && sub > 0;
+      // Программы из CONFIG.programDiscounts — своя скидка проекта
+      var pdOwn = progDiscount(p, inp.project);
+      // Траншевая ипотека: скидка не вводится, берётся из программы (колонка H листа)
+      var progDisc = pdOwn != null ? pdOwn : p.tranche ? p.disc : inp.disc;
+      var discIn = noDisc ? 0 : progDisc;
+      // шаг 1 — субсидия по базовой цене
+      var pv0 = Math.min(Math.max(pvIn, roundup0(BT * mpv), BT - lim), BT);
+      // у комбо субсидия — % от базовой части кредита (сверх семейного лимита K)
+      var sub0 = (p.combo ? Math.max(BT - pv0 - p.famLim, 0) : BT - pv0) * sub;
+      var subp = base > 0 ? sub0 / base : 0;
+      // шаг 2 — итоговая цена с порогом скидки
+      var praw = Math.min(round0(base * (1 - discIn) + sub0 + inp.finish), BT);
+      var price = round6(1 - praw / BT) < D.threshold ? BT : praw;
+      var disc = BT > 0 ? 1 - price / BT : 0;
+      var mpvr = Math.max(roundup0(price * mpv), price - lim);
+      var pv = Math.min(Math.max(pvIn, mpvr), price);
+      var loan = price - pv;
+      // Накопление ПВ: кредит — как при ПВ программы (pvBank), клиент сразу вносит не меньше ps.minPv, разницу копит до ps.end
+      var pvBank = null, pvSave = 0, pvSavePay = 0;
+      if (ps) {
+        pvBank = pv;
+        mpvr = Math.max(roundup0(price * ps.minPv), price - lim);
+        pv = Math.min(Math.max(pvIn, mpvr), price);
+        mpv = ps.minPv;
+        pvSave = Math.max(pvBank - pv, 0);
+        pvSavePay = pvSave / ps.n;
+      }
+      // Комбо: кредит до K — по семейной ставке (D), остаток — по базовой (E); ставка — средневзвешенная по суммам частей
+      var famPart = p.combo ? Math.min(Math.max(loan, 0), p.famLim) : 0;
+      var basePart = p.combo ? Math.max(loan - famPart, 0) : 0;
+      if (p.combo) r1 = r2 = loan > 0 ? (famPart * p.rFam + basePart * p.rBase) / loan : p.rFam;
+      var subr = (p.combo ? basePart : loan) * sub;
+      var pvShare = price > 0 ? pv / price : 0;
+      var status = loan <= 0 ? 'Кредит не нужен'
+        : (p.restr != null && base < p.restr) ? 'Не подходит для квартиры'
+        : pvShare > p.maxPv + 1e-12 ? 'ПВ больше максимального'          // J — макс. ПВ
+        : loan < p.minLoan ? 'Кредит меньше минимального'                 // K — мин. размер кредита
+        : sub === 0 ? OK
+        // Субсидированная программа без скидки: показываем, только если субсидия в ₽ (кредит × M) не больше скидки в ₽,
+        // которую клиент получил бы на квартиру (базовая цена × скидка)
+        : noDisc ? (subr <= base * progDisc + 0.5 ? OK : 'Не применяется')
+        : subp <= progDisc + D.tolerance + 1e-12 ? OK : 'Не применяется';
+      var X = term * 12;
+      var gm = Math.min(gn, X);
+      // Комбо: платёж = сумма двух аннуитетов на один срок (семейная часть + базовая часть)
+      var p1 = loan <= 0 || X <= 0 ? 0
+        : p.combo ? PMT(p.rFam / 12, X, famPart) + (basePart > 0 ? PMT(p.rBase / 12, X, basePart) : 0)
+        : PMT(r1 / 12, X, loan);
+      var bal = gm === 0 || loan <= 0 ? 0 : balance(r1 / 12, gm, p1, loan);
+      var p2 = gm === 0 ? p1 : (X - gm <= 0 ? 0 : PMT(r2 / 12, X - gm, bal));
+      var tot = gm === 0 ? p1 * X : p1 * gm + p2 * (X - gm);
+      // Комбо с повышением ставки (CONFIG.comboStepUp, ВТБ): после su.years лет остаток обеих частей — по ставке r1 + su.add (r2)
+      var su = p.combo ? comboStepUp(p) : null;
+      if (su && loan > 0 && X > round0(su.years * 12)) {
+        gm = round0(su.years * 12);
+        var pfm = PMT(p.rFam / 12, X, famPart), pbm = basePart > 0 ? PMT(p.rBase / 12, X, basePart) : 0;
+        bal = balance(p.rFam / 12, gm, pfm, famPart) + (basePart > 0 ? balance(p.rBase / 12, gm, pbm, basePart) : 0);
+        r2 = r1 + su.add;
+        p2 = PMT(r2 / 12, X - gm, bal);
+        tot = p1 * gm + p2 * (X - gm);
+      }
+      /* Траншевая: первый транш — сегодня (ДДУ), второй — p.date2. До второго транша платёж — аннуитет на первый транш
+         на весь срок; после — остаток первого транша + второй транш, аннуитет на оставшиеся месяцы. */
+      var t1 = 0, t2 = 0, m1 = 0;
+      if (p.tranche && loan > 0 && X > 0) {
+        t1 = round0(price * p.t1Share);
+        if (p.t1Min != null) t1 = Math.min(t1, p.t1Min); // «мин. транш 100 тыс.»: меньшее из % и суммы
+        t1 = Math.min(t1, loan); t2 = loan - t1;
+        var now = new Date(), d2 = p.date2;
+        m1 = (d2.getFullYear() - now.getFullYear()) * 12 + d2.getMonth() - now.getMonth() - (d2.getDate() < now.getDate() ? 1 : 0);
+        m1 = Math.min(Math.max(m1, 0), X - 1);
+        var rt = r1 / 12;
+        p1 = PMT(rt, X, t1);
+        p2 = PMT(rt, X - m1, balance(rt, m1, p1, t1) + t2);
+        tot = p1 * m1 + p2 * (X - m1);
+        gm = 0; r2 = r1;
+      }
+      // Накопление ПВ: в платёж периода строительства входит и платёж на накопление ПВ (p1m — только ипотека)
+      var p1m = p1;
+      if (ps && pvSave > 0) p1 += pvSavePay;
+      var over = Math.max(tot - loan, 0);
+      var note = status === 'Не применяется' ? 'Субсидия больше скидки'
+        : status === 'ПВ больше максимального' ? 'Программа для ПВ до ' + pct1(p.maxPv) + ', в расчёте ' + pct1(pvShare)
+        : status === 'Кредит меньше минимального' ? 'Программа для кредита от ' + rub(p.minLoan)
+        : ps && pvSave > 0 ? 'Сразу — ПВ ' + pct1(pv / price) + ', остальное до ' + pct1(pvBank / price) + ' (' + rub(pvSave) +
+            ') копится до ' + dfmt(ps.end) + ' — ' + rub(pvSavePay) + ' в месяц, ' + ps.n + ' мес.'
+        : pv > pvIn + 0.5 ? (pvIn === 0 ? 'Взят минимальный ПВ' : 'ПВ увеличен до минимума')
+        : (inp.term != null && inp.term > term) ? 'Срок снижен до максимального'
+        : (inp.term != null && inp.term < term) ? 'Срок увеличен до минимального' : '';
+      if (noDisc && progDisc > 0 && status === OK) note = 'Скидка на квартиру по этой программе не действует' + (note ? '. ' + note : '');
+      else if (pdOwn != null && Math.abs(pdOwn - inp.disc) > 1e-9 && status === OK)
+        note = (pdOwn ? 'Скидка на квартиру по этой программе — ' + pct1(pdOwn) : 'Скидка на квартиру по этой программе не действует') + (note ? '. ' + note : '');
+      return {
+        n: i + 1, name: fam ? p.name + ' — ' + inp.kids : p.name,
+        // банк — в скобках в конце названия: «Семейная ипотека (Абсолют)» → банк «Абсолют», программа «Семейная ипотека»
+        bank: bankOf(p.name).bank, prog: bankOf(p.name).prog + (fam ? ' — ' + inp.kids : ''), combo: !!p.combo, famPart: famPart, basePart: basePart,
+        tranche: !!p.tranche, t1: t1, t2: t2, m1: m1, date2: p.date2, r1: r1, r2: r2, gm: gm, term: term, mpv: mpv, lim: lim, maxPv: p.maxPv,
+        sub: sub, subp: subp, status: status, price: price, disc: disc, mpvr: mpvr, pv: pv, loan: loan, subr: subr,
+        p1: p1, p2: p2, bal: bal, tot: tot, over: over, note: note, pvUp: pvIn > 0 && pv > pvIn + 0.5,
+        // накопление ПВ (CONFIG.pvSaving): pvBank — ПВ для банка, pvSave — сколько копить, pvSavePay — в месяц, до pvSaveEnd; p1m — только ипотека
+        pvBank: pvBank, pvSave: pvSave, pvSavePay: pvSavePay, pvSaveEnd: ps ? ps.end : null, pvSaveN: ps ? ps.n : 0, p1m: p1m
+      };
+    });
+
+    // Основной список: ПВ не больше чем на 10% выше указанного (или минимального, если ПВ не указан)
+    // ПВ не указан: доля ПВ для отбора и автоподбора — банковская (у накопления ПВ — ПВ программы, а не 5%),
+    // иначе программа с накоплением стала бы «минимальной» и вытеснила остальные. ПВ указан — сравнение с введённым ПВ
+    var shareOf = function (r) { return r.price > 0 ? (r.pvBank != null ? r.pvBank : r.pv) / r.price : 1; };
+    var minShareAll = Infinity;
+    rows.forEach(function (r) { if (r.status === OK && shareOf(r) < minShareAll) minShareAll = shareOf(r); });
+    // Дальше 20% — программа убирается совсем (кроме типов из CONFIG.showAllTypes — IT ипотека)
+    var showAllType = CONFIG.showAllTypes.indexOf(inp.type) >= 0;
+    rows.forEach(function (r) {
+      r.inMain = pvIn > 0 ? r.pv <= pvIn * 1.1 + 0.5 : shareOf(r) <= minShareAll * 1.1 + 1e-9;
+      r.excluded = !showAllType && (pvIn > 0 ? r.pv > pvIn * 1.2 + 0.5 : shareOf(r) > minShareAll * 1.2 + 1e-9);
+    });
+    var usable = function (r) { return r.status === OK && !r.excluded; };
+
+    // выбор программы для подробного расчёта; выбранная вручную, но ставшая неподходящей — сбрасывается на автоподбор
+    var sel = 0, progReset = false;
+    var prog = inp.prog;
+    if (prog != null && (!rows[prog - 1] || !usable(rows[prog - 1]))) { prog = null; progReset = true; }
+    if (prog != null) {
+      sel = prog;
+    } else {
+      var best = function (pred) {
+        var b = 0, m = Infinity;
+        // у траншевой платёж до и после второго транша разный — сравниваем сумму всех выплат
+        rows.forEach(function (r) { var pay = r.tranche ? r.tot : r.p1; if (pred(r) && pay < m) { m = pay; b = r.n; } });
+        return b;
+      };
+      // ПВ указан — сначала программы без доплаты к нему. ПВ пустой — сравниваем платежи только среди программ
+      // с наименьшим ПВ (иначе выигрывают программы, где ПВ поднят до 50% и платёж ниже за счёт взноса)
+      var share = shareOf;
+      var minShare = Infinity;
+      rows.forEach(function (r) { if (usable(r) && share(r) < minShare) minShare = share(r); });
+      sel = (pvIn > 0 ? best(function (r) { return usable(r) && r.pv <= pvIn + 0.5; })
+                      : best(function (r) { return usable(r) && share(r) <= minShare + 0.005; })) ||
+            best(usable) || 0;
+    }
+    var alerts = [];
+    if (!rows.some(usable))
+      alerts.push('При выбранных условиях нет подходящих программ — измените ПВ, срок, скидку или тип ипотеки');
+    return { rows: rows, sel: sel, alerts: alerts, progReset: progReset };
+  }
+
+  /* ================== ФОРМАТИРОВАНИЕ ================== */
+  var nf0 = new Intl.NumberFormat('ru-RU', { maximumFractionDigits: 0 });
+  var nfp = new Intl.NumberFormat('ru-RU', { maximumFractionDigits: 2 });
+  var nfp1 = new Intl.NumberFormat('ru-RU', { maximumFractionDigits: 1 });
+  function rub(v) { return nf0.format(Math.round(v)) + ' ₽'; }
+  function pct(v) { return nfp.format(p15(v * 100)) + '%'; }
+  function pct1(v) { return nfp1.format(v * 100) + '%'; }
+  function dfmt(d) { return d ? d.toLocaleDateString('ru-RU') : '—'; }
+  function plural(n, a, b, c) { var m10 = n % 10, m100 = n % 100; return m10 === 1 && m100 !== 11 ? a : (m10 >= 2 && m10 <= 4 && (m100 < 10 || m100 >= 20) ? b : c); }
+  function years(y) { return nfp1.format(y) + ' ' + (Number.isInteger(y) ? plural(y, 'год', 'года', 'лет') : 'года'); }
+  function period(m) { if (!m) return 'нет'; return m % 12 === 0 ? years(m / 12) : m + ' мес.'; }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  // Скидка вводится вручную в процентах: «14», «7,5», «7.5». Разделитель — запятая, до 2 знаков, не больше 100
+  function cleanDisc(s) {
+    var t = String(s).replace(/\./g, ',').replace(/[^\d,]/g, '');
+    var i = t.indexOf(',');
+    if (i >= 0) t = t.slice(0, i + 1) + t.slice(i + 1).replace(/,/g, '').slice(0, 2);
+    if (i === 0) t = '0' + t;
+    if (parseFloat(t.replace(',', '.')) > 100) t = '100';
+    return t;
+  }
+  function parseDisc(s) {
+    var v = parseFloat(String(s).replace(',', '.'));
+    return isFinite(v) ? Math.min(Math.max(v, 0), 100) / 100 : 0;
+  }
+  function parseMoney(s) { var d = String(s).replace(/[^\d]/g, ''); return d ? parseInt(d, 10) : null; }
+  function badge(st) { return '<span class="ipc-badge ' + (st === OK ? 'ok' : 'bad') + '">' + esc(st) + '</span>'; }
+
+  /* ================== ИНТЕРФЕЙС ================== */
+  var root = document.getElementById('ipoteka-calc');
+  if (!root) return;
+  var $ = function (id) { return document.getElementById(id); };
+  var el = {
+    project: $('ipc-project'), flat: $('ipc-flat'), price: $('ipc-price'), finish: $('ipc-finish'), disc: $('ipc-disc'),
+    type: $('ipc-type'), kids: $('ipc-kids'), pv: $('ipc-pv'), term: $('ipc-term'),
+    alert: $('ipc-alert'), detail: $('ipc-detail'), thead: $('ipc-thead'), tbody: $('ipc-tbody'), title: $('ipc-table-title'),
+    pickinfo: $('ipc-pickinfo'), notes: $('ipc-notes'), save: $('ipc-save'), savemsg: $('ipc-savemsg'),
+    // фильтры таблицы программ
+    fBank: $('ipc-f-bank'), fRate: $('ipc-f-rate'), fPriceFrom: $('ipc-f-price-from'), fPriceTo: $('ipc-f-price-to'),
+    fPv: $('ipc-f-pv'), fPayFrom: $('ipc-f-pay-from'), fPayTo: $('ipc-f-pay-to'), fReset: $('ipc-f-reset')
+  };
+  if (!CONFIG.showLogo) $('ipc-logo').hidden = true;
+  if (CONFIG.installmentUrl) $('ipc-nav').href = CONFIG.installmentUrl; else $('ipc-nav').hidden = true;
+  var D = null;
+  var state = { type: CONFIG.defaults.type, prog: null, showAll: false, pdfRows: '',
+    // «Переплата» и «Итого выплат банку» в расчёте (overD) и столбец «Переплата» в таблице (overT) — скрыты, открываются значком-глазом
+    overD: false, overT: false };
+
+  function fillSelect(sel, items, value, label) {
+    sel.innerHTML = items.map(function (it) {
+      var v = String(it);
+      return '<option value="' + esc(v) + '"' + (it === value ? ' selected' : '') + '>' + esc(label ? label(it) : v) + '</option>';
+    }).join('');
+  }
+
+  function setupControls(keep) {
+    var project = keep ? el.project.value : CONFIG.defaults.project;
+    if (D.projects.indexOf(project) < 0) project = D.projects[0];
+    fillSelect(el.project, D.projects, project);
+
+    if (!keep) el.disc.value = CONFIG.defaults.discount ? nfp.format(p15(CONFIG.defaults.discount * 100)) : '';
+
+    var kids = keep ? el.kids.value : CONFIG.defaults.kids;
+    var names = D.kidsList;
+    if (names.indexOf(kids) < 0) kids = names[0];
+    fillSelect(el.kids, names, kids);
+
+    if (D.types.indexOf(state.type) < 0) state.type = D.types[0];
+    el.type.innerHTML = D.types.map(function (t) {
+      return '<button type="button" data-type="' + esc(t) + '" aria-pressed="' + (t === state.type) + '">' + esc(t) + '</button>';
+    }).join('');
+
+    if (!keep) {
+      el.price.value = CONFIG.defaults.price ? nf0.format(CONFIG.defaults.price) : '';
+      el.term.value = CONFIG.defaults.term || '';
+    }
+  }
+
+  function readInputs() {
+    var term = parseFloat(String(el.term.value).replace(',', '.'));
+    return {
+      project: el.project.value, type: state.type, kids: el.kids.value,
+      base: parseMoney(el.price.value) || 0, finish: parseMoney(el.finish.value) || 0,
+      disc: parseDisc(el.disc.value), pv: parseMoney(el.pv.value),
+      term: isFinite(term) && term > 0 ? term : null, prog: state.prog
+    };
+  }
+
+  function render() {
+    var inp = readInputs();
+    el.kids.disabled = !needKids(inp.type);
+    // Траншевая ипотека — скидка из условий программы, поле скидки скрыто
+    $('ipc-disc-row').hidden = inp.type === TRANCHE;
+    el.title.textContent = 'Все программы: ' + inp.project + ', ' + inp.type.toLowerCase();
+
+    if (!inp.base) {
+      el.alert.textContent = '';
+      el.detail.innerHTML = '<p class="ipc-static">Укажите стоимость квартиры.</p>';
+      el.tbody.innerHTML = ''; el.thead.innerHTML = ''; el.pickinfo.textContent = '';
+      postHeight();
+      return;
+    }
+    var res = compute(D, inp);
+    if (res.progReset) state.prog = null;
+    el.alert.innerHTML = res.alerts.map(esc).join('<br>');
+    renderDetail(inp, res);
+    renderTable(res);
+    el.pickinfo.innerHTML = state.prog != null
+      ? 'Программа выбрана вручную · <button type="button" class="ipc-link" id="ipc-auto">вернуть автоподбор</button>'
+      : 'Нажмите на строку, чтобы посмотреть расчёт по программе';
+    postHeight();
+  }
+
+  function renderDetail(inp, res) {
+    if (!res.sel) { el.detail.innerHTML = '<p class="ipc-static">Для выбранного проекта и типа ипотеки программ нет.</p>'; return; }
+    var r = res.rows[res.sel - 1];
+    var grace = r.gm > 0;
+    // Накопление ПВ (CONFIG.pvSaving): платёж до даты = ипотека + накопление ПВ
+    var save = r.pvSavePay > 0, endRu = save ? dfmt(r.pvSaveEnd) : '';
+    var dl = [];
+    var add = function (k, v, strong) { dl.push('<dt' + (strong ? ' class="ipc-strong"' : '') + '>' + k + '</dt><dd' + (strong ? ' class="ipc-strong"' : '') + '>' + v + '</dd>'); };
+    // Комбо с повышением ставки (ВТБ): r.gm — месяцев до повышения, r.r2 — ставка после
+    var step = r.combo && grace;
+    add(r.combo ? 'Средневзвешенная ставка' + (step ? ', первые ' + period(r.gm) : '') : 'Ставка' + (grace ? ' в льготный период' : ''), pct(r.r1));
+    if (step) add('Ставка с ' + (r.gm / 12 + 1) + '-го года', pct(r.r2));
+    // «без накопления на ПВ» — льготный период до той же даты, что у «с накоплением»
+    var graceEnd = !save && CONFIG.pvSavingSplit && r.name === CONFIG.pvSavingSplit.no && pvSavingEnd(inp.project) ? dfmt(new Date(pvSavingEnd(inp.project) + 'T00:00:00')) : null;
+    if (!step && grace) { add('Ставка после льготного периода', pct(r.r2)); add('Льготный период', save ? period(r.gm) + ', до ' + endRu : graceEnd ? period(r.gm) + ', до ' + graceEnd : period(r.gm)); }
+    add('Срок ипотеки', years(r.term));
+    add('Итоговая цена квартиры', rub(r.price), true);
+    add('Итоговая скидка', pct1(r.disc) + ' · ' + rub(inp.base + inp.finish - r.price));
+    add('Минимальный ПВ', rub(r.mpvr));
+    add('Первоначальный взнос в расчёте', rub(r.pv) + ' · ' + pct1(r.price ? r.pv / r.price : 0), true);
+    add('Сумма кредита', rub(r.loan), true);
+    if (save) {
+      add('ПВ к накоплению до ' + pct1(r.pvBank / r.price), rub(r.pvSave) + ' · до ' + endRu);
+      add('Платёж по ипотеке до ' + endRu, rub(r.p1m));
+      add('Платёж на накопление ПВ', rub(r.pvSavePay) + ' · ' + r.pvSaveN + ' мес.');
+    }
+    if (r.tranche) {
+      add('Первый транш · ' + dfmt(new Date()), rub(r.t1) + ' · ' + pct1(r.price ? r.t1 / r.price : 0));
+      add('Второй транш · ' + dfmt(r.date2), rub(r.t2) + ' · ' + pct1(r.price ? r.t2 / r.price : 0));
+    }
+    if (state.overD) { add('Переплата (проценты)', rub(r.over)); add('Итого выплат банку', rub(r.tot), true); }
+    if (CONFIG.showInternal) add('Субсидия застройщика банку', rub(r.subr) + ' · ' + pct(r.sub));
+
+    var flat = el.flat.value.trim();
+    var head = '<div class="ipc-hero">' +
+      '<div class="ipc-prog">' + esc(r.name) + '</div>' +
+      (flat ? '<div class="ipc-static" style="margin-bottom:10px">кв. ' + esc(flat) + '</div>' : '') +
+      '<div class="ipc-pay">' +
+        (r.tranche
+          ? '<div><div class="ipc-k">Платёж до ' + dfmt(r.date2) + '</div><div class="ipc-v">' + rub(r.p1) + '</div></div>' +
+            '<div><div class="ipc-k">Платёж после второго транша</div><div class="ipc-v ipc-sm">' + rub(r.p2) + '</div></div>'
+          : '<div><div class="ipc-k">' + (step ? 'Платёж первые ' + period(r.gm) : save ? 'Платёж до ' + endRu + ' (с накоплением ПВ)' : grace ? 'Платёж в льготный период' : 'Ежемесячный платёж') + '</div><div class="ipc-v">' + rub(r.p1) + '</div></div>' +
+            (grace ? '<div><div class="ipc-k">' + (step ? 'Платёж с ' + (r.gm / 12 + 1) + '-го года' : save ? 'Платёж после ' + endRu : 'Платёж после льготного периода') + '</div><div class="ipc-v ipc-sm">' + rub(r.p2) + '</div></div>' : '')) +
+      '</div></div>';
+    el.detail.innerHTML = head + '<dl>' + dl.join('') + '</dl>' + (r.note ? '<div class="ipc-note">' + esc(r.note) + '</div>' : '') +
+      '<div class="ipc-eye-row">' + eyeBtn('detail', state.overD, 'переплату и итого выплат банку') + '</div>';
+  }
+
+  // Значок-глаз: открытый — показать скрытое, перечёркнутый — скрыть
+  function eyeBtn(id, shown, what) {
+    return '<button type="button" class="ipc-eye" data-eye="' + id + '" aria-pressed="' + shown + '" title="' + (shown ? 'Скрыть ' : 'Показать ') + what + '" aria-label="' +
+      (shown ? 'Скрыть ' : 'Показать ') + what + '"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+      '<path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/>' + (shown ? '<path d="M3 3l18 18"/>' : '') + '</svg></button>';
+  }
+  function renderTable(res) {
+    var cols = [
+      ['№', function (r) { return r.pos; }],
+      ['Программа', function (r) { return esc(r.prog); }],
+      ['Банк', function (r) { return esc(r.bank || '—'); }],
+      ['Ставка', function (r) { return pct(r.r1) + (r.combo ? '<span class="ipc-s2">средневзвеш.</span>' : '') + (r.gm ? '<span class="ipc-s2">' + (r.combo ? 'с ' + (r.gm / 12 + 1) + '-го года ' : 'далее ') + pct(r.r2) + '</span>' : ''); }],
+      ['Льготный период', function (r) { return period(r.gm); }],
+      ['Срок', function (r) { return years(r.term); }],
+      ['Итоговая цена', function (r) { return rub(r.price) + '<span class="ipc-s2">' + (r.disc > 0.00005 ? 'скидка ' + pct1(r.disc) : 'без скидки') + '</span>'; }],
+      ['ПВ', function (r) {
+        return '<span' + (r.pvUp ? ' class="ipc-pvup"' : '') + '>' + rub(r.pv) + '</span><span class="ipc-s2">' +
+          (r.maxPv < 1 ? pct1(r.mpv) + '–' + pct1(r.maxPv) : 'мин. ' + pct1(r.mpv)) + '</span>' +
+          (r.pvSavePay > 0 ? '<span class="ipc-s2">+' + rub(r.pvSavePay) + '/мес до ' + pct1(r.pvBank / r.price) + '</span>' : '');
+      }],
+      ['Кредит', function (r) { return rub(r.loan); }],
+      ['Платёж', function (r) { return '<b>' + rub(r.p1) + '</b>' + (r.gm || r.tranche ? '<span class="ipc-s2">' + (r.tranche ? 'с ' + dfmt(r.date2) + ' ' : 'далее ') + rub(r.p2) + '</span>' : ''); }],
+      ['Переплата', function (r) { return rub(r.over); }]
+    ];
+    // Столбец «Переплата» — только если открыт значком-глазом у заголовка таблицы
+    if (!state.overT) cols = cols.filter(function (c) { return c[0] !== 'Переплата'; });
+    $('ipc-eye-table').innerHTML = eyeBtn('table', state.overT, 'столбец «Переплата»');
+    if (CONFIG.showInternal) cols.push(['Субсидия банку', function (r) { return rub(r.subr) + '<span class="ipc-s2">' + pct(r.sub) + ' кредита</span>'; }]);
+    // У комбо-ипотеки льготного периода нет — колонку не показываем
+    if (state.type === COMBO || state.type === TRANCHE) cols = cols.filter(function (c) { return c[0] !== 'Льготный период'; });
+    // Траншевая: колонка с траншами — после «Кредит»
+    if (state.type === TRANCHE) cols.splice(cols.map(function (c) { return c[0]; }).indexOf('Кредит') + 1, 0,
+      ['Транши', function (r) { return rub(r.t1) + '<span class="ipc-s2">' + dfmt(r.date2) + ': ' + rub(r.t2) + '</span>'; }]);
+
+    el.thead.innerHTML = '<tr>' + cols.map(function (c) { return '<th>' + c[0] + '</th>'; }).join('') + '</tr>';
+    // Неподходящие программы не показываются совсем.
+    // В основном списке — программы, где ПВ не больше чем на 10% выше указанного клиентом
+    // (если ПВ не указан — выше минимального: наименьшей доли ПВ среди подходящих программ). Остальные — под ссылкой.
+    // Сортировка по названию программы (по алфавиту); одинаковые названия — в порядке листа
+    // Программ с одинаковым названием — не больше 2 в основном списке: с наименьшим ежемесячным платежом
+    var groups = {}, keep = {};
+    res.rows.forEach(function (r) { if (r.status === OK && !r.excluded && r.inMain) (groups[r.name] = groups[r.name] || []).push(r); });
+    Object.keys(groups).forEach(function (k) {
+      groups[k].slice().sort(function (a, b) { return a.p1 - b.p1 || a.n - b.n; }).slice(0, 2).forEach(function (r) { keep[r.n] = true; });
+    });
+    // Для типов из CONFIG.showAllTypes (IT ипотека) — все подходящие программы сразу, без скрытия
+    if (CONFIG.showAllTypes.indexOf(state.type) >= 0) res.rows.forEach(function (r) { if (r.status === OK && !r.excluded) keep[r.n] = true; });
+    var main = res.rows.filter(function (r) { return r.status === OK && !r.excluded && (keep[r.n] || r.n === res.sel); }).sort(byName);
+    var extra = res.rows.filter(function (r) { return r.status === OK && !r.excluded && !keep[r.n] && r.n !== res.sel; }).sort(byName);
+    // Фильтры над таблицей: банк, ставка до, итоговая цена от–до, ПВ до, платёж от–до (по жирному платежу в таблице)
+    var ok = res.rows.filter(function (r) { return r.status === OK && !r.excluded; });
+    var banks = [];
+    ok.forEach(function (r) { if (r.bank && banks.indexOf(r.bank) < 0) banks.push(r.bank); });
+    banks.sort(function (a, b) { return collator ? collator.compare(a, b) : (a < b ? -1 : 1); });
+    var fb = el.fBank.value;
+    if (fb && banks.indexOf(fb) < 0) fb = '';
+    el.fBank.innerHTML = '<option value="">Все банки</option>' + banks.map(function (b) {
+      return '<option value="' + esc(b) + '"' + (b === fb ? ' selected' : '') + '>' + esc(b) + '</option>';
+    }).join('');
+    el.fBank.value = fb;
+    var fRate = parseFloat(String(el.fRate.value).replace(',', '.'));
+    var F = {
+      bank: fb, rate: isFinite(fRate) ? fRate / 100 : null,
+      priceFrom: parseMoney(el.fPriceFrom.value), priceTo: parseMoney(el.fPriceTo.value), pvTo: parseMoney(el.fPv.value),
+      payFrom: parseMoney(el.fPayFrom.value), payTo: parseMoney(el.fPayTo.value)
+    };
+    var active = !!(F.bank || F.rate != null || F.priceFrom != null || F.priceTo != null || F.pvTo != null || F.payFrom != null || F.payTo != null);
+    el.fReset.hidden = !active;
+    var pass = function (r) {
+      return (!F.bank || r.bank === F.bank) &&
+        (F.rate == null || r.r1 <= F.rate + 1e-9) &&
+        (F.priceFrom == null || r.price >= F.priceFrom) && (F.priceTo == null || r.price <= F.priceTo) &&
+        (F.pvTo == null || r.pv <= F.pvTo + 0.5) &&
+        (F.payFrom == null || r.p1 >= F.payFrom - 0.5) && (F.payTo == null || r.p1 <= F.payTo + 0.5);
+    };
+    main = main.filter(pass); extra = extra.filter(pass);
+    // Развёрнутый список — единый, по алфавиту; ссылка «Скрыть» — в конце
+    var shown = state.showAll ? main.concat(extra).sort(byName) : main;
+    // № — порядковый номер строки в списке (номер строки листа остаётся внутренним, в data-n)
+    shown.forEach(function (r, i) { r.pos = i + 1; });
+    var rowHtml = function (r) {
+      return '<tr data-n="' + r.n + '" class="' + (r.n === res.sel ? 'ipc-sel' : '') + '" tabindex="0">' +
+        cols.map(function (c) { return '<td data-l="' + c[0] + '"><span>' + c[1](r) + '</span></td>'; }).join('') + '</tr>';
+    };
+    var more = extra.length ? '<tr class="ipc-more-row"><td colspan="' + cols.length + '"><button type="button" class="ipc-link" id="ipc-more">' +
+      (state.showAll ? 'Скрыть программы с бо́льшим ПВ' : 'Показать все программы (ещё ' + extra.length + ')') + '</button></td></tr>' : '';
+    var empty = !shown.length && active ? '<tr class="ipc-empty-row"><td colspan="' + cols.length + '">Нет программ по выбранным фильтрам</td></tr>' : '';
+    el.tbody.innerHTML = shown.map(rowHtml).join('') + empty + more;
+    // В PDF — то же, что видно на экране
+    state.pdfRows = shown.map(rowHtml);
+  }
+
+  function renderNotes() {
+    var n = [
+      'Тип «Ипотека для всех» объединяет стандартные и субсидированные стандартные программы.',
+      'Семейная ипотека: ставки, льготный период, срок и лимит кредита зависят от количества детей. Хотя бы одному ребёнку на момент заключения договора должно быть меньше 7 лет. Новые условия действуют для договоров с 1 октября 2026 года, программа продлена до конца 2030 года.',
+      'Первоначальный взнос — не меньше минимального: большее из «мин. ПВ %» и «цена − лимит кредита».',
+      'Платёж аннуитетный. В льготный период — по льготной ставке на весь срок, после — пересчёт на остаток долга по основной ставке.'
+    ];
+    if (CONFIG.showInternal) n.splice(2, 0,
+      'Субсидия банку оплачивается из скидки клиента: итоговая цена = цена со скидкой + субсидия + отделка, но не выше базовой цены + отделка. Если итоговая скидка меньше ' + pct1(D.threshold) + ', клиент платит базовую цену.',
+      'Субсидированная программа применяется, если субсидия в % от базовой цены не превышает скидку + ' + pct(D.tolerance) + '. Программы без субсидии применяются всегда.');
+    n.push('Расчёт ориентировочный: итоговые условия, страхование и комиссии определяет банк.');
+    el.notes.innerHTML = n.map(function (t) { return '<li>' + esc(t) + '</li>'; }).join('');
+  }
+
+  function postHeight() {
+    if (window.parent === window) return;
+    try { window.parent.postMessage({ ipotekaCalcHeight: Math.ceil(document.documentElement.scrollHeight) }, '*'); } catch (e) {}
+  }
+
+  function moneyInput(input) {
+    input.addEventListener('input', function () {
+      var v = parseMoney(input.value);
+      var pos = input.value.length - input.selectionStart;
+      input.value = v == null ? '' : nf0.format(v);
+      try { var p = Math.max(0, input.value.length - pos); input.setSelectionRange(p, p); } catch (e) {}
+      render();
+    });
+  }
+
+  /* ---------- Сохранение в PDF ----------
+     Каждая страница отчёта рисуется отдельно (html2canvas) и кладётся на свой лист A4 (jsPDF).
+     Библиотеки подгружаются только по нажатию кнопки. От прокрутки и ширины экрана результат не зависит. */
+  var PDF_LIBS = [
+    'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js'
+  ];
+  var libsLoading = null;
+  function loadScript(src) {
+    return new Promise(function (res, rej) {
+      var s = document.createElement('script');
+      s.src = src; s.async = true;
+      s.onload = res; s.onerror = function () { rej(new Error('load ' + src)); };
+      document.head.appendChild(s);
+    });
+  }
+  function loadPdfLibs() {
+    if (window.html2canvas && window.jspdf) return Promise.resolve();
+    if (!libsLoading) libsLoading = Promise.all(PDF_LIBS.map(loadScript)).then(function () {
+      if (!window.html2canvas || !window.jspdf) throw new Error('libs');
+    }).catch(function (e) { libsLoading = null; throw e; });
+    return libsLoading;
+  }
+
+  var PAGE_W = 1123, PAGE_H = 794; // A4 альбомный при 96 dpi
+
+  function renderPage(page) {
+    // Страница временно кладётся в левый верхний угол окна под содержимым сайта — посетитель её не видит
+    var host = document.createElement('div');
+    host.style.cssText = 'position:fixed;left:0;top:0;z-index:-2147483647;pointer-events:none;width:' + PAGE_W + 'px;';
+    host.appendChild(page);
+    document.body.appendChild(host);
+    var done = function () { if (host.parentNode) host.parentNode.removeChild(host); };
+    return window.html2canvas(page, {
+      scale: 2, backgroundColor: '#F5F8FB', useCORS: true, logging: false,
+      scrollX: 0, scrollY: 0, x: 0, y: 0, width: PAGE_W, height: Math.max(PAGE_H, page.offsetHeight),
+      windowWidth: PAGE_W + 200, windowHeight: Math.max(PAGE_H, page.offsetHeight) + 200
+    }).then(function (c) { done(); return c; }, function (e) { done(); throw e; });
+  }
+
+  function createPdf() {
+    return Promise.all([loadPdfLibs(), logoPng()]).then(function (r) {
+      var rep = buildReport(r[1]);
+      var canvases = [];
+      return rep.pages.reduce(function (p, page) {
+        return p.then(function () { return renderPage(page).then(function (c) { canvases.push(c); }); });
+      }, Promise.resolve()).then(function () {
+        var pdf = new window.jspdf.jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
+        var W = 297, H = 210;
+        canvases.forEach(function (c, i) {
+          if (i) pdf.addPage();
+          pdf.setFillColor(245, 248, 251); pdf.rect(0, 0, W, H, 'F');
+          var k = Math.min(W / c.width, H / c.height), w = c.width * k, h = c.height * k;
+          pdf.addImage(c.toDataURL('image/jpeg', 0.92), 'JPEG', (W - w) / 2, 0, w, h);
+        });
+        return { pdf: pdf, file: rep.file };
+      });
+    });
+  }
+
+  // Логотип для PDF переводим в PNG: html2canvas неверно рисует SVG (получается красный прямоугольник)
+  var logoPngCache = null;
+  function logoPng() {
+    if (logoPngCache) return Promise.resolve(logoPngCache);
+    var svg = root.querySelector('.ipc-logo-svg');
+    if (!svg) return Promise.resolve('');
+    var c = svg.cloneNode(true);
+    c.setAttribute('width', '1920'); c.setAttribute('height', '1410');
+    var src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(new XMLSerializer().serializeToString(c));
+    return new Promise(function (res) {
+      var img = new Image();
+      img.onload = function () {
+        try {
+          var cv = document.createElement('canvas');
+          cv.width = 480; cv.height = 352;
+          cv.getContext('2d').drawImage(img, 0, 0, cv.width, cv.height);
+          logoPngCache = cv.toDataURL('image/png');
+        } catch (e) { logoPngCache = ''; }
+        res(logoPngCache);
+      };
+      img.onerror = function () { res(''); };
+      img.src = src;
+    });
+  }
+  function logoImg(png) { return png ? '<img class="ipc-r-logo" src="' + png + '" width="60" height="44" alt="BAZA Development">' : ''; }
+
+  // Отчёт: страница 1 — исходные данные и расчёт выбранной программы, страница 2 — все программы
+  function buildReport(png) {
+    var inp = readInputs(), now = new Date();
+    var ds = now.toLocaleDateString('ru-RU') + ', ' + now.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+    var flat = el.flat.value.trim();
+    var rows = [];
+    var add = function (k, v, strong) { rows.push('<dt' + (strong ? ' class="ipc-strong"' : '') + '>' + k + '</dt><dd' + (strong ? ' class="ipc-strong"' : '') + '>' + v + '</dd>'); };
+    add('Проект', esc(inp.project));
+    if (flat) add('Номер квартиры', esc(flat));
+    add('Стоимость квартиры', rub(inp.base), true);
+    if (inp.finish) add('Отделка', rub(inp.finish));
+    add('Скидка на квартиру', inp.type === TRANCHE ? 'по условиям программы' : pct(inp.disc));
+    add('Тип ипотеки', esc(inp.type));
+    if (needKids(inp.type)) add('Количество детей', esc(inp.kids));
+    add('Первоначальный взнос', inp.pv ? rub(inp.pv) : 'минимальный');
+    add('Срок', inp.term ? years(inp.term) : 'максимальный');
+
+    var page = function (html) {
+      var d = document.createElement('div');
+      d.className = 'ipc-report ipc-r-page';
+      d.innerHTML = html;
+      return d;
+    };
+    var head = '<div class="ipc-r-head"><div><div class="ipc-r-title">Расчёт ипотеки</div>' +
+      '<div class="ipc-r-meta">' + esc(inp.project) + (flat ? ' · кв. ' + esc(flat) : '') + ' · ' + ds + '</div></div>' + logoImg(png) + '</div>';
+    var p1 = page(head +
+      '<div class="ipc-r-grid">' +
+        '<div class="ipc-r-card"><div class="ipc-r-h">Исходные данные</div><dl>' + rows.join('') + '</dl></div>' +
+        '<div class="ipc-r-card"><div class="ipc-r-h">Расчёт выбранной программы</div>' + el.detail.innerHTML + '</div>' +
+      '</div>');
+    // Таблица программ — на следующих листах, по 14 строк на лист, чтобы шрифт оставался читаемым
+    var rowsAll = state.pdfRows || [], PER = 14, tables = [];
+    for (var k = 0; k < Math.max(rowsAll.length, 1); k += PER) tables.push(rowsAll.slice(k, k + PER));
+    var title = esc(el.title.textContent);
+    var tablePages = tables.map(function (chunk, idx) {
+      var last = idx === tables.length - 1;
+      return page(
+        '<div class="ipc-r-card"><div class="ipc-r-h">' + title + (idx ? ' (продолжение)' : '') + '</div>' +
+          '<table><thead>' + el.thead.innerHTML + '</thead><tbody>' + chunk.join('') + '</tbody></table></div>' +
+        (last ? '<div class="ipc-r-foot">Расчёт ориентировочный: итоговые условия, страхование и комиссии определяет банк.</div>' : ''));
+    });
+    var file = ('Расчёт ипотеки ' + inp.project + (flat ? ' кв ' + flat : '') + ' ' + now.toLocaleDateString('ru-RU'))
+      .replace(/[\\/:*?"<>|]+/g, '-') + '.pdf';
+    return { pages: [p1].concat(tablePages), file: file };
+  }
+
+  function savePdf() {
+    if (!readInputs().base) return;
+    var btn = el.save, label = btn.textContent;
+    btn.disabled = true; btn.textContent = 'Готовлю PDF…'; el.savemsg.textContent = '';
+    createPdf().then(function (r) {
+      r.pdf.save(r.file);
+    }).catch(function () {
+      el.savemsg.textContent = 'Не удалось сохранить PDF. Нажмите «Распечатать расчёт» и выберите «Сохранить как PDF».';
+    }).then(function () {
+      btn.disabled = false; btn.textContent = label;
+    });
+  }
+
+  function bind() {
+    [el.price, el.finish, el.pv, el.fPriceFrom, el.fPriceTo, el.fPv, el.fPayFrom, el.fPayTo].forEach(moneyInput);
+    el.fRate.addEventListener('input', function () {
+      var v = cleanDisc(el.fRate.value);
+      if (v !== el.fRate.value) el.fRate.value = v;
+      render();
+    });
+    el.fBank.addEventListener('change', render);
+    el.fReset.addEventListener('click', function () {
+      [el.fRate, el.fPriceFrom, el.fPriceTo, el.fPv, el.fPayFrom, el.fPayTo].forEach(function (x) { x.value = ''; });
+      el.fBank.value = '';
+      render();
+    });
+    el.disc.addEventListener('input', function () {
+      var v = cleanDisc(el.disc.value);
+      if (v !== el.disc.value) el.disc.value = v;
+      render();
+    });
+    [el.project, el.kids].forEach(function (s) { s.addEventListener('change', function () { if (s === el.project) state.prog = null; render(); }); });
+    el.term.addEventListener('input', render);
+    el.flat.addEventListener('input', render);
+    el.type.addEventListener('click', function (e) {
+      var b = e.target.closest('button[data-type]'); if (!b) return;
+      state.type = b.getAttribute('data-type'); state.prog = null;
+      Array.prototype.forEach.call(el.type.children, function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+      render();
+    });
+    var pick = function (e) { var tr = e.target.closest('tr[data-n]'); if (!tr) return; state.prog = +tr.getAttribute('data-n'); render(); };
+    el.tbody.addEventListener('click', pick);
+    el.tbody.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pick(e); } });
+    root.addEventListener('click', function (e) { if (e.target.id === 'ipc-auto') { state.prog = null; render(); }
+      if (e.target.id === 'ipc-more') { state.showAll = !state.showAll; render(); }
+      var eye = e.target.closest && e.target.closest('[data-eye]');
+      if (eye) { if (eye.dataset.eye === 'detail') state.overD = !state.overD; else state.overT = !state.overT; render(); } });
+    $('ipc-print').addEventListener('click', function () { window.print(); });
+    el.save.addEventListener('click', savePdf);
+    window.addEventListener('resize', postHeight);
+  }
+
+  function useData(data, source) {
+    var first = !D;
+    D = data;
+    setupControls(!first);
+    renderNotes();
+    window.IpotekaCalc.source = source; // служебная отметка, на странице не показывается
+    render();
+  }
+
+  window.IpotekaCalc = { compute: compute, normalize: normalize, data: function () { return D; }, createPdf: createPdf };
+
+  useData(normalize(SNAPSHOT), 'копия от ' + SNAPDATE);
+  bind();
+  if (CONFIG.liveData && window.fetch) {
+    loadLive().then(function (d) {
+      useData(d, 'таблица, ' + new Date().toLocaleString('ru-RU'));
+    }).catch(function () { /* остаёмся на встроенной копии */ });
+  }
+})();
+</script>
+<!-- ===== ВСТАВКА НА САЙТ: КОНЕЦ ===== -->
+
+</body>
+</html>
