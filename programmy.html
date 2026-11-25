@@ -70,6 +70,11 @@
 #programs-list tbody tr:hover td { background: var(--pl-page); }
 #programs-list .pl-s2 { display: block; color: var(--pl-faint); font-size: 12px; font-weight: 400; margin-top: 2px; }
 #programs-list .pl-empty { color: var(--pl-muted); font-size: 14px; }
+#programs-list .pl-inputs { display: flex; flex-wrap: wrap; gap: 12px 16px; align-items: flex-end; }
+#programs-list .pl-field input { font: inherit; font-size: 15px; height: 44px; padding: 0 14px; width: 210px; max-width: 100%; border: 1px solid var(--pl-line); border-radius: 12px; color: var(--pl-text); background: var(--pl-bg); }
+#programs-list .pl-field input:focus { outline: none; border-color: var(--pl-faint); }
+#programs-list .pl-field.pl-disc input { width: 110px; }
+#programs-list .pl-hint { color: var(--pl-faint); font-size: 12px; margin: 10px 0 0; }
 #programs-list .pl-foot { margin-top: 4px; font-size: 12px; color: var(--pl-faint); }
 
 @media (max-width: 640px) {
@@ -102,6 +107,7 @@
 @media print {
   #programs-list { background: #FFFFFF; padding: 0; max-width: none; font-size: 11px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   #programs-list .pl-nav, #programs-list .pl-sub, #programs-list .pl-filter, #programs-list .pl-typebar { display: none !important; }
+  #programs-list .pl-print { display: block !important; }
   #programs-list h2 { font-size: 24px; }
   #programs-list .pl-card { border: 1px solid var(--pl-line); padding: 12px 14px; }
   #programs-list table { font-size: 10.5px; }
@@ -126,6 +132,15 @@
     <span class="pl-label" id="pl-type-l">Тип ипотеки</span>
     <div class="pl-pills" id="pl-type" role="group" aria-labelledby="pl-type-l"></div>
   </div>
+  <div class="pl-card pl-typebar">
+    <div class="pl-inputs">
+      <div class="pl-field"><label class="pl-label" for="pl-price">Стоимость квартиры, ₽</label><input id="pl-price" type="text" inputmode="numeric" autocomplete="off" value="20 000 000"></div>
+      <div class="pl-field"><label class="pl-label" for="pl-pv">Первоначальный взнос, ₽</label><input id="pl-pv" type="text" inputmode="numeric" autocomplete="off" placeholder="минимальный"></div>
+      <div class="pl-field pl-disc"><label class="pl-label" for="pl-disc">Скидка на квартиру, %</label><input id="pl-disc" type="text" inputmode="decimal" autocomplete="off" value="6"></div>
+    </div>
+    <p class="pl-hint">Для столбца «Субсидия банку». Субсидия застройщика банку = % субсидии × сумма кредита (у комбо — от части кредита сверх семейного лимита). Кредит = цена − ПВ; ПВ — не меньше минимального по программе. Если субсидия больше скидки (цена × скидка), разница прибавляется к цене квартиры — субсидия считается от кредита по новой цене.</p>
+  </div>
+  <p class="pl-foot pl-print" id="pl-print" hidden></p>
   <div id="pl-groups"></div>
   <p class="pl-foot">Мин. ПВ указан в % от стоимости квартиры. «—» — при такой скидке программа недоступна.<br>Условия ориентировочные: итоговые ставку, срок и сумму кредита определяет банк.</p>
 </div>
@@ -151,7 +166,9 @@
     pvSavingSplit: { name: 'Ипотека для всех на срок строительства (Совком)', r1: 0.044, projects: ['Бестселлер'],
       save: 'Ипотека для всех на срок строительства с накоплением на ПВ (Совком)', no: 'Ипотека для всех на срок строительства без накопления на ПВ (Совком)' },
     // Тип, для которого мин. ПВ пересчитывается от скидки (у остальных — значение колонки I)
-    pvByDiscountType: 'Ипотека для всех'
+    pvByDiscountType: 'Ипотека для всех',
+    // Столбец «Субсидия банку» (₽): true — если субсидия больше скидки, разница прибавляется к цене (как в калькуляторе копии)
+    subsidyMarkup: true
   }, window.PROGRAMS_LIST_CONFIG || {});
 
   /* Встроенная копия листа (на случай, если таблица недоступна). Снята: 25.11.2026 */
@@ -245,7 +262,7 @@
         n: 10000 + i, combo: true, projects: String(r[0] || '').split(',').map(function (s) { return s.trim(); }).filter(Boolean),
         type: String(r[1]).trim(), name: fixHomoglyphs(String(r[2]).trim().replace(/\s{2,}/g, ' ')),
         rateMin: wavg(minLoan), rateMax: wavg(lim), grace: 0, term: numx(r[7]),
-        mpv: numx(r[8]), maxPv: numx(r[9]), minLoan: minLoan, lim: lim, sub: numx(r[13]) || 0,
+        mpv: numx(r[8]), maxPv: numx(r[9]), minLoan: minLoan, lim: lim, famLim: famLim, sub: numx(r[13]) || 0,
         kids: /^[-–—]?$/.test(kids) ? null : kids
       };
       p.r1 = p.rateMin; p.r2 = p.rateMax; // для сортировки
@@ -334,6 +351,48 @@
     return p.maxPv != null && v > p.maxPv + 1e-9 ? null : v;
   }
 
+  /* Расчётная субсидия застройщика банку, ₽ (столбец «Субсидия банку», 25.11.2026): по цене и ПВ из полей над таблицами.
+     ПВ = max(введённый, цена × мин. ПВ программы, цена − лимит); кредит = цена − ПВ; субсидия = кредит × % субсидии
+     (у комбо — от части кредита сверх семейного лимита K). У накопления ПВ (Совком) кредит — как при ПВ программы.
+     CONFIG.subsidyMarkup: цена = база + max(субсидия(цена) − база × скидка, 0) — подбирается (рост субсидии меньше роста цены). */
+  function parseMoney(s) { var d = String(s || '').replace(/[^\d]/g, ''); return d ? parseInt(d, 10) : null; }
+  function inputsNow() {
+    var dEl = document.getElementById('pl-disc');
+    var d = dEl ? parseFloat(String(dEl.value).replace(',', '.').replace(/[^\d.]/g, '')) : NaN;
+    return { price: parseMoney(document.getElementById('pl-price').value) || 0, pv: parseMoney(document.getElementById('pl-pv').value) || 0,
+      disc: isFinite(d) ? Math.min(Math.max(d, 0), 100) / 100 : 0 };
+  }
+  function subsidyOf(p, I) {
+    var base = I.price, mpv = p.mpv || 0, lim = p.lim == null ? Infinity : p.lim;
+    var at = function (P) {
+      var pv = Math.min(Math.max(I.pv, Math.ceil(P * mpv), P - lim), P), loan = P - pv;
+      return { P: P, pv: pv, loan: loan, s: (p.combo ? Math.max(loan - (p.famLim || 0), 0) : loan) * p.sub };
+    };
+    var r = at(base);
+    if (CONFIG.subsidyMarkup) {
+      var P = base;
+      for (var i = 0; i < 5000; i++) {
+        var nx = Math.round(base + Math.max(at(P).s - base * I.disc, 0));
+        if (Math.abs(nx - P) <= 1) { P = Math.max(nx, P); break; }
+        P = nx;
+      }
+      r = at(P);
+    }
+    r.up = r.P - base;
+    r.bad = r.loan <= 0 ? 'кредит не нужен' : p.minLoan != null && r.loan < p.minLoan ? 'кредит меньше мин. ' + rub(p.minLoan)
+      : p.maxPv != null && r.P > 0 && r.pv / r.P > p.maxPv + 1e-12 ? 'ПВ больше макс. ' + pct(p.maxPv) : '';
+    return r;
+  }
+  function subsidyCell(p) {
+    if (!(p.sub > 0)) return 'нет';
+    var I = inputsNow();
+    if (!(I.price > 0)) return '—';
+    var r = subsidyOf(p, I);
+    if (r.bad) return '—<span class="pl-s2">' + esc(r.bad) + '</span>';
+    return rub(r.s) + '<span class="pl-s2">' + pct(p.sub) + ' от ' + rub(p.combo ? Math.max(r.loan - (p.famLim || 0), 0) : r.loan) + '</span>' +
+      (r.up > 0.5 ? '<span class="pl-s2">цена выше на ' + rub(r.up) + '</span>' : '');
+  }
+
   /* ---------- Вывод ---------- */
   // kidsFilter — выбранное количество детей по каждому типу (у детей «Все» нет); typeFilter '' — все типы
   var D = null, kidsFilter = {}, typeFilter = '';
@@ -379,6 +438,7 @@
       ['Мин. размер кредита', function (p) { return rub(p.minLoan); }],
       ['Лимит кредита', function (p) { return p.lim == null ? 'без лимита' : rub(p.lim); }]
     ]);
+    c.push(['Субсидия банку', subsidyCell]);
     if (needKids(type)) c.splice(1, 0, ['Количество детей', function (p) { return esc(p.kids || '—'); }]);
     if (multiProject) c.splice(1, 0, ['Проект', function (p) { return esc(p.projects.join(', ')); }]);
     return c;
@@ -425,6 +485,19 @@
     var b = e.target.closest('[data-kids] button[data-k]'); if (!b) return;
     kidsFilter[b.closest('[data-kids]').getAttribute('data-kids')] = b.getAttribute('data-k'); render();
   });
+  function renderPrintLine() {
+    var I = inputsNow(), el = document.getElementById('pl-print');
+    el.textContent = 'Субсидия банку рассчитана для цены ' + rub(I.price) + ', ПВ ' + (I.pv ? rub(I.pv) : 'минимальный') +
+      (document.getElementById('pl-disc') ? ', скидка ' + pct(I.disc) : '') + '.';
+  }
+  ['pl-price', 'pl-pv', 'pl-disc'].forEach(function (id) {
+    var inp = document.getElementById(id); if (!inp) return;
+    inp.addEventListener('input', function () {
+      if (id !== 'pl-disc') { var v = parseMoney(inp.value); var s = v == null ? '' : nf0.format(v); if (s !== inp.value) inp.value = s; }
+      renderPrintLine(); render();
+    });
+  });
+  renderPrintLine();
   typeEl.addEventListener('click', function (e) {
     var b = e.target.closest('button[data-t]'); if (!b) return;
     typeFilter = b.getAttribute('data-t'); render();
