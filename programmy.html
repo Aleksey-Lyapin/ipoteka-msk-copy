@@ -388,9 +388,8 @@
     var I = inputsNow();
     if (!(I.price > 0)) return '—';
     var r = subsidyOf(p, I);
-    if (r.bad) return '—<span class="pl-s2">' + esc(r.bad) + '</span>';
-    return rub(r.s) + '<span class="pl-s2">' + pct(p.sub) + ' от ' + rub(p.combo ? Math.max(r.loan - (p.famLim || 0), 0) : r.loan) + '</span>' +
-      (r.up > 0.5 ? '<span class="pl-s2">цена выше на ' + rub(r.up) + '</span>' : '');
+    // В ячейке — только сумма в ₽ (подписи «% от кредита», «цена выше на…» и причины «—» убраны 25.11.2026 по просьбе)
+    return rub(r.s);
   }
 
   /* ---------- Вывод ---------- */
